@@ -1,8 +1,12 @@
-import classnames from 'classnames';
+// A simple JavaScript utility for conditionally joining classNames together
+import joinClassNames from 'classnames';
 import React from 'react';
 
-export default function Button({ children, primary, danger, className, buttonType = 'button', ...rest }) {
+const Button = ({ children, primary, danger, buttonType = 'button', ...rest }) => {
+
+  // assign a different button style based on the value of props
   let buttonStyle = 'btn-default';
+
   if (primary) {
     buttonStyle = 'btn-primary';
   }
@@ -11,8 +15,10 @@ export default function Button({ children, primary, danger, className, buttonTyp
   }
 
   return (
-    <button className={classnames('btn', buttonStyle, className)} type={buttonType} {...rest}>
+    <button className={joinClassNames('btn', buttonStyle)} type={buttonType} {...rest}>
       {children}
     </button>
   );
 }
+
+export default Button;

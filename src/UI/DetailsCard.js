@@ -1,25 +1,25 @@
 import React from 'react';
 
-function DetailsCard({ children }) {
+const DetailsCard = ({ children }) => {
   return (
-    <div className="jr-details-card">
+    <div className="details-card">
       {children}
     </div>
   );
 }
 
-DetailsCard.Header = function DetailsCardHeader({ children }) {
+DetailsCard.Header = ({ children }) => {
   return (
-    <div className="jr-details-card__header">
+    <div className="details-card-header">
       {children}
     </div>
   );
 };
 
-DetailsCard.ButtonGroup = function DetailsCardButtonGroup({ children }) {
+DetailsCard.ButtonGroup = ({ children }) => {
   return (
     <div style={{ flex: 1 }}>
-      <div className="jr-details-card__button-group">
+      <div className="details-card-button-group">
         {children}
       </div>
     </div>

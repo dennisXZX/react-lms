@@ -1,22 +1,21 @@
 import axios from 'axios';
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Button from '../UI/Button';
 import DetailsCard from '../UI/DetailsCard';
 import DisplayField from '../UI/DisplayField';
 import Spinner from 'react-spinkit';
+import Confirm from 'react-confirm-bootstrap';
 import { statusCodeToError } from '../utils';
 
-class CourseDetailsView extends React.Component {
+class CourseDetailsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       isEditing: false,
       isSaving: false,
-      showConfirmDeleteModal: false,
-      isDeleting: false,
       error: '',
       course: null,
     };
@@ -58,6 +57,10 @@ class CourseDetailsView extends React.Component {
     };
     axios.get(`/api/courses/${id}`).then(onSuccess).catch(onFail);
   }
+
+  /*
+  * Event handlers
+  * */
 
   handleEdit = () => {
     this.setState({ isEditing: true });
@@ -110,18 +113,6 @@ class CourseDetailsView extends React.Component {
     }
   }
 
-  handleDeleteClick = () => {
-    this.setState({
-      showConfirmDeleteModal: true,
-    });
-  }
-
-  handleCancelDelete = () => {
-    this.setState({
-      showConfirmDeleteModal: false,
-    });
-  }
-
   handleConfirmDelete = () => {
     const { course } = this.state;
 
@@ -132,24 +123,50 @@ class CourseDetailsView extends React.Component {
       });
   }
 
+  /*
+  * Render helper methods
+  * */
+
+  renderSpinner = () => {
+    return (
+      <DetailsCard>
+        <div className="spinner">
+          <Spinner name="pacman" color="#3b6db0" />
+        </div>
+      </DetailsCard>
+    )
+  }
+
+  renderError = () => {
+    return (
+      <DetailsCard>
+        {this.state.error}
+      </DetailsCard>
+    )
+  }
+
   renderDisplay = () => {
-    const { course, isDeleting, showConfirmDeleteModal } = this.state;
+    const { course } = this.state;
 
     return (
       <DetailsCard>
         <DetailsCard.Header>
           <h1>{course.name}</h1>
           <DetailsCard.ButtonGroup>
-            <Button primary onClick={this.handleEdit}>Edit</Button>
+            <Button
+              primary
+              onClick={this.handleEdit}
+              style={{ marginRight: 10 }}>
+              Edit
+            </Button>
             {course.id > 0 && (
-              <Button
-                danger
-                onClick={this.handleDeleteClick}
-                disabled={isDeleting}
-                style={{ marginLeft: 10 }}
-              >
-                {isDeleting ? 'Deleting...' : 'Delete'}
-              </Button>
+              <Confirm
+                onConfirm={this.handleConfirmDelete}
+                body="Are you sure you want to delete this course?"
+                confirmText="Confirm Delete"
+                title="Deleting Course">
+                <Button danger>Delete</Button>
+              </Confirm>
             )}
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
@@ -230,7 +247,6 @@ class CourseDetailsView extends React.Component {
           <Button
             primary
             type="submit"
-            className="btn btn-primary"
             disabled={isSaving}
           >
             Save
@@ -252,25 +268,15 @@ class CourseDetailsView extends React.Component {
 
     // render a loading spinner
     if (isLoading) {
-      return (
-        <DetailsCard>
-          <div className="spinner">
-            <Spinner name="pacman" color="#3b6db0" />
-          </div>
-        </DetailsCard>
-      );
+      return this.renderSpinner();
     }
 
     // render an error message
     if (!isLoading && error) {
-      return (
-        <DetailsCard>
-          {error}
-        </DetailsCard>
-      );
+      return this.renderError();
     }
 
-    // render a course detail if it's not in editing mode
+    // render the course detail if it's not in editing mode
     if (course && !isEditing) {
       return this.renderDisplay();
     }

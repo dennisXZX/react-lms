@@ -1,10 +1,10 @@
 import React from 'react';
 
-function DisplayField({ label, children }) {
+const DisplayField = ({ label, children }) => {
   return (
-    <div className="jr-display-field">
-      <div className="jr-display-field__label">{label}</div>
-      <div className="jr-display-field__content">
+    <div className="display-field">
+      <div className="display-field-label">{label}</div>
+      <div className="display-field-content">
         {children}
       </div>
     </div>
