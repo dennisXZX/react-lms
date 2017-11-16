@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class TopNav extends Component {
   render() {
     return (
-      <nav className="navbar navbar-inverse bg-inverse">
+      <nav className="navbar-default">
         <div className="container">
           <div className="navbar-header">
             <button
@@ -20,7 +20,7 @@ class TopNav extends Component {
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-            <Link to="/" className="navbar-brand">Jiangren</Link>
+            <Link to="/" className="navbar-brand">Home</Link>
           </div>
 
           <div id="navbar" className="navbar-collapse collapse">

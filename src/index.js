@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 
+import './styles';
+
 import Shell from './App/Shell';
 
 import registerServiceWorker from './registerServiceWorker';
