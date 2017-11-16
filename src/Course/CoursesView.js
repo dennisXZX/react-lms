@@ -14,24 +14,32 @@ class CoursesView extends Component {
     };
   }
 
+  // load courses when the component is successfully mounted
   componentDidMount() {
     this.loadCourses();
   }
 
+  // helper function to load all courses
   loadCourses = () => {
     this.setState({ isLoading: true });
+
+    // issue a GET request to fetch all courses
     axios.get('/api/courses').then((response) => {
-      this.setState({ courses: response.data, isLoading: false });
+      console.log(response);
+      this.setState({
+        courses: response.data,
+        isLoading: false
+      });
     });
   }
 
   render() {
     return (
       <div>
-        <h1 className="title">Courses</h1>
-        <Link to="/courses/create" className="btn btn-primary">Add new course</Link>
-        <div style={{ marginTop: 20 }}>
-          {this.state.isLoading && <Spinner name="pacman" color="#e74c3c"/>}
+        <h1>Courses</h1>
+        <Link to="/courses/create" className="btn btn-primary btn-add">Add new course</Link>
+        <div>
+          {this.state.isLoading && <div className="spinner"><Spinner name="pacman" color="#3b6db0" /></div>}
           {!this.state.isLoading && (
             <div className="row">
               {this.state.courses.map(course => <CourseCard course={course} key={course.id} />)}

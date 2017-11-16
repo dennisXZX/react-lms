@@ -1,0 +1,10 @@
+.btn-add {
+  margin: 10px 0 25px;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
