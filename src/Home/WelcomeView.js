@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-class App extends Component {
+class WelcomeView extends Component {
+
   render() {
     return (
       <div>
-       hello world
+        Welcome
       </div>
     );
   }
 }
 
-export default App;
+export default WelcomeView;
