@@ -1,2 +1,3 @@
 import './override.css';
-import './courses-view.css';
+import './common.css';
+import './course-card.css';
