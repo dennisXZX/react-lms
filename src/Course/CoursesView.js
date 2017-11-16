@@ -25,7 +25,6 @@ class CoursesView extends Component {
 
     // issue a GET request to fetch all courses
     axios.get('/api/courses').then((response) => {
-      console.log(response);
       this.setState({
         courses: response.data,
         isLoading: false
@@ -33,22 +32,35 @@ class CoursesView extends Component {
     });
   }
 
+  renderSpinner = () => {
+    return (
+      <div className="spinner">
+        <Spinner name="pacman" color="#3b6db0" />
+      </div>
+    )
+  }
+
+  renderCourseCard = () => {
+    return (
+      <div className="row">
+        {this.state.courses.map(
+          course => <CourseCard course={course} key={course.id} />
+        )}
+      </div>
+    )
+  }
+
   render() {
     return (
       <div>
         <h1>Courses</h1>
-        <Link to="/courses/create" className="btn btn-primary btn-add">Add new course</Link>
+        <Link to="/courses/create" className="btn btn-primary btn-add">
+          Add new course
+        </Link>
         <div>
           {/* display a spinner when loading the course data */}
-          {this.state.isLoading && <div className="spinner"><Spinner name="pacman" color="#3b6db0" /></div>}
           {/* display all the courses when course data loading is complete */}
-          {!this.state.isLoading && (
-            <div className="row">
-              {this.state.courses.map(
-                course => <CourseCard course={course} key={course.id} />
-              )}
-            </div>
-          )}
+          { this.state.isLoading ? this.renderSpinner() : this.renderCourseCard() }
         </div>
       </div>
     )
