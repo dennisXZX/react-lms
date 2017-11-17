@@ -18,7 +18,8 @@ DetailsCard.Header = ({ children }) => {
 
 DetailsCard.ButtonGroup = ({ children }) => {
   return (
-    <div style={{ flex: 1 }}>
+    // flex is a shorthand for flex-grow, flex-shrink and flex-basis
+    <div style={{ flex: "1 1 0" }}>
       <div className="details-card-button-group">
         {children}
       </div>

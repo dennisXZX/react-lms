@@ -21,12 +21,20 @@ class CourseDetailsView extends Component {
     };
   }
 
-  // load courses when the component is successfully mounted
+  /*
+  * Component life cycle methods
+  * */
+
   componentDidMount() {
+    // load courses when the component is successfully mounted
     this.loadCourse();
   }
 
-  // helper function to load the course with the id
+  /*
+  * Helper methods
+  * */
+
+  // helper method to load a course with the id
   loadCourse = () => {
     // retrieve the id from URL
     const { id } = this.props.match.params;
@@ -67,10 +75,13 @@ class CourseDetailsView extends Component {
   }
 
   handleInputChange = (event) => {
+    // get a reference to the object that dispatched the event
     const target = event.target;
+    // get the value from the node
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
+    // store the value into state
     this.setState({
       course: {
         ...this.state.course,
@@ -80,18 +91,23 @@ class CourseDetailsView extends Component {
   }
 
   handleSubmit = (event) => {
+    // prevent the default submit action
     event.preventDefault();
 
     this.setState({ isSaving: true });
+
     const { course } = this.state;
+
+    // callback function on fulfilled promise
     const onSuccess = (response) => {
-      this.course = response.data;
+      // update the state with the data from API call
       this.setState({
         isEditing: false,
         isSaving: false,
         course: response.data,
       });
     };
+
     if (this.props.match.params.id === 'create') {
       axios.post('/api/courses', course)
         .then(onSuccess);
@@ -99,16 +115,19 @@ class CourseDetailsView extends Component {
       axios.put(`/api/courses/${course.id}`, course)
         .then(onSuccess);
     }
+
   }
 
   handleCancel = () => {
+    // get the id parameter from URL
     const { id } = this.props.match.params;
+
+    // check if it's it's adding new course or editing existing course
     if (id === 'create') {
       this.props.history.push('/courses');
     } else {
       this.setState({
-        course: this.course,
-        isEditing: false,
+        isEditing: false
       });
     }
   }
@@ -159,17 +178,16 @@ class CourseDetailsView extends Component {
               style={{ marginRight: 10 }}>
               Edit
             </Button>
-            {course.id > 0 && (
-              <Confirm
-                onConfirm={this.handleConfirmDelete}
-                body="Are you sure you want to delete this course?"
-                confirmText="Confirm Delete"
-                title="Deleting Course">
-                <Button danger>Delete</Button>
-              </Confirm>
-            )}
+            <Confirm
+              onConfirm={this.handleConfirmDelete}
+              body="Are you sure you want to delete this course?"
+              confirmText="Confirm Delete"
+              title="Deleting Course">
+              <Button danger>Delete</Button>
+            </Confirm>
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
+
         <DisplayField label="Code">{course.code}</DisplayField>
         <DisplayField label="Start at">{course.start_at}</DisplayField>
         <DisplayField label="End at">{course.end_at}</DisplayField>
@@ -240,7 +258,7 @@ class CourseDetailsView extends Component {
               value={course.introduction || ''}
               name="introduction"
               onChange={this.handleInputChange}
-              style={{ height: 80 }}
+              style={{ height: 100 }}
               id="introduction"
             />
           </div>

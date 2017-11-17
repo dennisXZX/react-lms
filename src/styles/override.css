@@ -98,3 +98,12 @@
     border-radius: 0px;
   }
 }
+
+/*
+  Override Bootstarp Alert
+  Nav bar style provided by https://work.smarchal.com/twbscolor/
+*/
+
+.thumbnail .caption {
+  padding: 15px;
+}
