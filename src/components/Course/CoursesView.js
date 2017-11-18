@@ -9,6 +9,13 @@ import CourseCard from './CourseCard';
 @inject('CourseStore')
 @observer
 class CoursesView extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: false
+    }
+  }
 
   // load courses when the component is successfully mounted
   componentDidMount() {
@@ -19,12 +26,12 @@ class CoursesView extends Component {
   loadCourses = () => {
     const { CourseStore } = this.props;
 
-    CourseStore.addLoadingSpinner();
+    this.setState({ isLoading: true });
 
     // issue a GET request to fetch all courses
     axios.get('/api/courses').then((response) => {
-      CourseStore.loadCourses(response.data);
-      CourseStore.removeLoadingSpinner();
+      CourseStore.addCourses(response.data);
+      this.setState({ isLoading: false });
     });
   }
 
@@ -49,8 +56,6 @@ class CoursesView extends Component {
   }
 
   render() {
-    const { CourseStore } = this.props;
-
     return (
       <div>
         <h1>Courses</h1>
@@ -60,7 +65,7 @@ class CoursesView extends Component {
         <div>
           {/* display a spinner when loading the course data */}
           {/* display all the courses when course data loading is complete */}
-          { CourseStore.isLoading ? this.renderSpinner() : this.renderCourseCard() }
+          { this.state.isLoading ? this.renderSpinner() : this.renderCourseCard() }
         </div>
       </div>
     )
