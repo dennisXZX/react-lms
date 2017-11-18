@@ -70,10 +70,6 @@ class CourseDetailsView extends Component {
   * Event handlers
   * */
 
-  handleEdit = () => {
-    this.setState({ isEditing: true });
-  }
-
   handleInputChange = (event) => {
     // get a reference to the object that dispatched the event
     const target = event.target;
@@ -88,6 +84,34 @@ class CourseDetailsView extends Component {
         [name]: value,
       },
     });
+  }
+
+  handleEdit = () => {
+    this.setState({ isEditing: true });
+  }
+
+  handleCancel = () => {
+    // get the id parameter from URL
+    const { id } = this.props.match.params;
+
+    // check if it's it's adding new course or editing existing course
+    if (id === 'create') {
+      this.props.history.push('/courses');
+    } else {
+      this.setState({
+        isEditing: false
+      });
+    }
+  }
+
+  handleConfirmDelete = () => {
+    const { course } = this.state;
+
+    this.setState({ isDeleting: true });
+    axios.delete(`/api/courses/${course.id}`)
+      .then(() => {
+        this.props.history.push('/courses');
+      });
   }
 
   handleSubmit = (event) => {
@@ -116,30 +140,6 @@ class CourseDetailsView extends Component {
         .then(onSuccess);
     }
 
-  }
-
-  handleCancel = () => {
-    // get the id parameter from URL
-    const { id } = this.props.match.params;
-
-    // check if it's it's adding new course or editing existing course
-    if (id === 'create') {
-      this.props.history.push('/courses');
-    } else {
-      this.setState({
-        isEditing: false
-      });
-    }
-  }
-
-  handleConfirmDelete = () => {
-    const { course } = this.state;
-
-    this.setState({ isDeleting: true });
-    axios.delete(`/api/courses/${course.id}`)
-      .then(() => {
-        this.props.history.push('/courses');
-      });
   }
 
   /*
