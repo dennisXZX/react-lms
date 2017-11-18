@@ -22,7 +22,7 @@ class CourseDetailsView extends Component {
   }
 
   /*
-  * Component life cycle methods
+  * components life cycle methods
   * */
 
   componentDidMount() {

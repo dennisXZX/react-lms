@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Spinner from 'react-spinkit';
+import { inject, observer } from 'mobx-react';
 import axios from 'axios';
 
 import CourseCard from './CourseCard';
 
+@inject('CourseStore')
+@observer
 class CoursesView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      courses: [],
-    };
-  }
 
   // load courses when the component is successfully mounted
   componentDidMount() {
@@ -21,14 +17,14 @@ class CoursesView extends Component {
 
   // helper function to load all courses
   loadCourses = () => {
-    this.setState({ isLoading: true });
+    const { CourseStore } = this.props;
+
+    CourseStore.addLoadingSpinner();
 
     // issue a GET request to fetch all courses
     axios.get('/api/courses').then((response) => {
-      this.setState({
-        courses: response.data,
-        isLoading: false
-      });
+      CourseStore.loadCourses(response.data);
+      CourseStore.removeLoadingSpinner();
     });
   }
 
@@ -41,9 +37,11 @@ class CoursesView extends Component {
   }
 
   renderCourseCard = () => {
+    const { CourseStore } = this.props;
+
     return (
       <div className="row">
-        {this.state.courses.map(
+        {CourseStore.courses.map(
           course => <CourseCard course={course} key={course.id} />
         )}
       </div>
@@ -51,6 +49,8 @@ class CoursesView extends Component {
   }
 
   render() {
+    const { CourseStore } = this.props;
+
     return (
       <div>
         <h1>Courses</h1>
@@ -60,7 +60,7 @@ class CoursesView extends Component {
         <div>
           {/* display a spinner when loading the course data */}
           {/* display all the courses when course data loading is complete */}
-          { this.state.isLoading ? this.renderSpinner() : this.renderCourseCard() }
+          { CourseStore.isLoading ? this.renderSpinner() : this.renderCourseCard() }
         </div>
       </div>
     )
