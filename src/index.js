@@ -8,7 +8,7 @@ import axios from 'axios';
 import './styles';
 
 // React component
-import Shell from './App/Shell';
+import Shell from './Component/App/Shell';
 
 // employ service worker to make a progressive web app
 import registerServiceWorker from './registerServiceWorker';
