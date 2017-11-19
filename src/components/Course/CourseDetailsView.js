@@ -38,7 +38,7 @@ class CourseDetailsView extends Component {
     // retrieve the id from URL
     const { id } = this.props.match.params;
 
-    // return a form if it's on a 'create' route
+    // return a form interface if it's on a 'create' route
     if (id === 'create') {
       this.setState({
         course: {},
