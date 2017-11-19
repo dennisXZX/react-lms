@@ -40,12 +40,8 @@ class CoursesView extends Component {
   * */
 
   handleSearchInputChange = (event) => {
-    // get a reference to the object that dispatched the event
-    const target = event.target;
-    // get the value from the node
-    const value = target.value;
-
-    console.log(value);
+    // update the filter property in store
+    this.props.CourseStore.filter = event.target.value;
   }
 
   /*
@@ -61,11 +57,11 @@ class CoursesView extends Component {
   }
 
   renderCourseCard = () => {
-    const { CourseStore } = this.props;
+    const { filteredCourses } = this.props.CourseStore;
 
     return (
       <div className="row">
-        {CourseStore.courses.map(
+        {filteredCourses.map(
           course => <CourseCard course={course} key={course.id} />
         )}
       </div>
@@ -73,11 +69,11 @@ class CoursesView extends Component {
   }
 
   render() {
-    const { CourseStore } = this.props;
+    const { filter, courseCount } = this.props.CourseStore;
 
     return (
       <div>
-        <h1>Courses ({CourseStore.courseCount} in total)</h1>
+        <h1>Courses ({courseCount} in total)</h1>
         <div className="row" style={{ margin: '15px 0' }}>
           <div className="col-sm-6" style={{ padding: '0' }}>
             <Link to="/courses/create" className="btn btn-primary">
@@ -86,6 +82,7 @@ class CoursesView extends Component {
           </div>
           <div className="col-sm-6" style={{ padding: "0" }}>
             <input
+              value={filter}
               onChange={this.handleSearchInputChange}
               style={{ paddingLeft: "10px", width: "200px"}}
               className="pull-right"
