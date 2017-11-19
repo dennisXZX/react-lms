@@ -1,0 +1,18 @@
+.student-item {
+  display: flex;
+}
+
+.student-item-text {
+  display: flex;
+  padding-left: 20px;
+  align-items: center;
+  height: 100%;
+}
+
+.student-item-name {
+  font-weight: bold;
+}
+
+.student-item-email {
+  margin-left: 15px;
+}
