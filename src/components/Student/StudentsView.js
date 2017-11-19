@@ -72,7 +72,7 @@ class StudentsView extends Component {
 
     return (
       <div>
-        <h1 className="title">Students</h1>
+        <h1 className="title">Students ({StudentStore.studentCount} in Total)</h1>
         <div className="row" style={{ margin: '20px 0' }}>
           <div className="col-sm-6" style={{ padding: '0' }}>
             <Link to="/students/create" className="btn btn-primary">
