@@ -4,6 +4,11 @@ import { Link } from 'react-router-dom';
 import { truncate } from '../../utils/index';
 
 class CourseCard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.randomColor = this.generateRandomColor();
+  }
 
   // generate a random color
   generateRandomColor = () => {
@@ -17,12 +22,11 @@ class CourseCard extends Component {
 
   render() {
     const course = this.props.course;
-    const randomColor = this.generateRandomColor();
 
     return (
       <div className="col-sm-6 col-md-3">
         <Link to={`/courses/${course.id}`}>
-          <div className="thumbnail course-card" style={{ backgroundColor: randomColor }}>
+          <div className="thumbnail course-card" style={{ backgroundColor: this.randomColor }}>
             <div className="caption">
               <h4 className="course-card-name">{truncate(course.name, 20)}</h4>
               <p className="course-card-code">{truncate(course.code, 30)}</p>
