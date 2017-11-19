@@ -65,6 +65,8 @@ class StudentsView extends Component {
     return (
       <div>
         <h1 className="title">Students ({StudentStore.studentCount} in Total)</h1>
+
+        {/* Add new student button and search bar */}
         <div className="row" style={{ margin: '20px 0' }}>
           <div className="col-sm-6" style={{ padding: '0' }}>
             <Link to="/students/create" className="btn btn-primary">
@@ -82,6 +84,7 @@ class StudentsView extends Component {
           </div>
         </div>
 
+        {/* display student items */}
         <div className="row">
           <div className="col-sm-12">
             {this.state.isLoading ? <Spinner /> : this.renderStudentItem()}

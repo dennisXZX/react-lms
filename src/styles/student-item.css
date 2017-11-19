@@ -1,5 +1,6 @@
 .student-item-wrapper:hover {
   background-color: #ebf3f9;
+  cursor: pointer;
 }
 
 .student-item {
@@ -19,5 +20,8 @@
 }
 
 .student-item-email {
-  margin-left: 15px;
+}
+
+.icon {
+  margin-right: 8px;
 }

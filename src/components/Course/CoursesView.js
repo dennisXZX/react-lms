@@ -66,6 +66,8 @@ class CoursesView extends Component {
     return (
       <div>
         <h1>Courses ({CourseStore.courseCount} in total)</h1>
+
+        {/* Add new course button and search bar */}
         <div className="row" style={{ margin: '20px 0' }}>
           <div className="col-sm-6" style={{ padding: '0' }}>
             <Link to="/courses/create" className="btn btn-primary">
@@ -82,9 +84,9 @@ class CoursesView extends Component {
               placeholder="Search a course by name" />
           </div>
         </div>
+
+        {/* display course items */}
         <div>
-          {/* display a spinner when loading the course data */}
-          {/* display all the courses when course data loading is complete */}
           { this.state.isLoading ? <Spinner /> : this.renderCourseCard() }
         </div>
       </div>
