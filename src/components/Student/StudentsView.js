@@ -26,7 +26,6 @@ class StudentsView extends Component {
     this.setState({ isLoading: true });
 
     axios.get('/api/students').then((response) => {
-
       StudentStore.loadStudents(response.data);
 
       this.setState({
@@ -42,6 +41,30 @@ class StudentsView extends Component {
   handleSearchInputChange = (event) => {
     // update the filter property in store
     this.props.StudentStore.filter = event.target.value;
+  }
+
+  /*
+  * Render helper methods
+  * */
+
+  renderSpinner = () => {
+    return (
+      <div className="spinner">
+        <Spinner name="pacman" color="#3b6db0" />
+      </div>
+    )
+  }
+
+  renderStudentItem = () => {
+    const { StudentStore } = this.props;
+
+    return (
+      <ul className="list-group">
+        {StudentStore.filteredStudents.map(student => (
+          <StudentItem student={student} key={student.id} />
+        ))}
+      </ul>
+    )
   }
 
   render() {
@@ -69,14 +92,7 @@ class StudentsView extends Component {
 
         <div className="row">
           <div className="col-sm-12">
-            {this.state.isLoading && <Spinner />}
-            {!this.state.isLoading && (
-              <ul className="list-group">
-                {StudentStore.filteredStudents.map(student => (
-                  <StudentItem student={student} key={student.id} />
-                ))}
-              </ul>
-            )}
+            {this.state.isLoading ? this.renderSpinner() : this.renderStudentItem()}
           </div>
         </div>
       </div>
