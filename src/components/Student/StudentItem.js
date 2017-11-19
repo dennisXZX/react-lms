@@ -5,7 +5,8 @@ import Gravatar from '../UI/Gravatar';
 
 export default function StudentItem({ student, ...rest }) {
   return (
-    <div className="list-group-item" {...rest}>
+    <div className="list-group-item student-item-wrapper" {...rest}>
+      <Link to={`/students/${student.id}`}>
       <div className="student-item">
         <Gravatar email={student.email} size={50} />
         <div style={{ flex: 1 }}>
@@ -16,10 +17,10 @@ export default function StudentItem({ student, ...rest }) {
                 <i className="fa fa-envelope-o" /> {student.email}
               </span>
             </div>
-            <Link to={`/students/${student.id}`} className="btn btn-default">Details</Link>
           </div>
         </div>
       </div>
+      </Link>
     </div>
   );
 }

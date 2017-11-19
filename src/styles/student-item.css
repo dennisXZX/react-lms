@@ -1,5 +1,10 @@
+.student-item-wrapper:hover {
+  background-color: #ebf3f9;
+}
+
 .student-item {
   display: flex;
+  margin: 10px 0;
 }
 
 .student-item-text {

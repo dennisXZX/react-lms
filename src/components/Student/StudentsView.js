@@ -86,7 +86,7 @@ class StudentsView extends Component {
               style={{ paddingLeft: "10px", width: "200px"}}
               className="pull-right"
               type="text"
-              placeholder="Search a student" />
+              placeholder="Search a student by name" />
           </div>
         </div>
 

@@ -87,7 +87,7 @@ class CoursesView extends Component {
               style={{ paddingLeft: "10px", width: "200px"}}
               className="pull-right"
               type="text"
-              placeholder="Search a course" />
+              placeholder="Search a course by name" />
           </div>
         </div>
         <div>
