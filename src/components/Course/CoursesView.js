@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Spinner from 'react-spinkit';
+import Spinner from '../UI/Spinner';
 import { inject, observer } from 'mobx-react';
 import axios from 'axios';
 
@@ -48,14 +48,6 @@ class CoursesView extends Component {
   * Render helper methods
   * */
 
-  renderSpinner = () => {
-    return (
-      <div className="spinner">
-        <Spinner name="pacman" color="#3b6db0" />
-      </div>
-    )
-  }
-
   renderCourseCard = () => {
     const { CourseStore } = this.props;
 
@@ -84,7 +76,7 @@ class CoursesView extends Component {
             <input
               value={CourseStore.filter}
               onChange={this.handleSearchInputChange}
-              style={{ paddingLeft: "10px", width: "200px"}}
+              style={{ paddingLeft: "10px", width: "230px"}}
               className="pull-right"
               type="text"
               placeholder="Search a course by name" />
@@ -93,7 +85,7 @@ class CoursesView extends Component {
         <div>
           {/* display a spinner when loading the course data */}
           {/* display all the courses when course data loading is complete */}
-          { this.state.isLoading ? this.renderSpinner() : this.renderCourseCard() }
+          { this.state.isLoading ? <Spinner /> : this.renderCourseCard() }
         </div>
       </div>
     )

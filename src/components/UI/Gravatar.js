@@ -1,7 +1,7 @@
 import React from 'react';
 import gravatarUrl from 'gravatar-url';
 
-function Gravatar({ email, size = 100, style, ...rest }) {
+const Gravatar = ({ email, size = 100, style, ...rest }) => {
   return (
     <img
       className="img-circle gravatar"

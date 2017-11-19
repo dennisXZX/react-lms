@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
-import Spinner from 'react-spinkit';
 import StudentItem from './StudentItem';
+import Spinner from '../UI/Spinner';
 
 @inject('StudentStore')
 @observer
@@ -47,14 +47,6 @@ class StudentsView extends Component {
   * Render helper methods
   * */
 
-  renderSpinner = () => {
-    return (
-      <div className="spinner">
-        <Spinner name="pacman" color="#3b6db0" />
-      </div>
-    )
-  }
-
   renderStudentItem = () => {
     const { StudentStore } = this.props;
 
@@ -83,7 +75,7 @@ class StudentsView extends Component {
             <input
               value={StudentStore.filter}
               onChange={this.handleSearchInputChange}
-              style={{ paddingLeft: "10px", width: "200px"}}
+              style={{ paddingLeft: "10px", width: "230px"}}
               className="pull-right"
               type="text"
               placeholder="Search a student by name" />
@@ -92,7 +84,7 @@ class StudentsView extends Component {
 
         <div className="row">
           <div className="col-sm-12">
-            {this.state.isLoading ? this.renderSpinner() : this.renderStudentItem()}
+            {this.state.isLoading ? <Spinner /> : this.renderStudentItem()}
           </div>
         </div>
       </div>
