@@ -12,7 +12,7 @@ class StudentStore {
     const matchesFilter = new RegExp(this.filter, "i");
 
     return this.students.filter((student) => {
-      const fullName = student.first_name + student.last_name
+      const fullName = student.first_name + ' ' + student.last_name;
       return !this.filter || matchesFilter.test(fullName);
     });
   }
