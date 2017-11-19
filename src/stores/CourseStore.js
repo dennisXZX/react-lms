@@ -4,7 +4,7 @@ class CourseStore {
   @observable courses = [];
   @observable filter = '';
 
-  @action addCourses(courses) {
+  @action loadCourses(courses) {
     this.courses = courses;
   }
 

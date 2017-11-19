@@ -26,7 +26,6 @@ class CourseDetailsView extends Component {
   * */
 
   componentDidMount() {
-    // load courses when the component is successfully mounted
     this.loadCourse();
   }
 
@@ -39,16 +38,18 @@ class CourseDetailsView extends Component {
     // retrieve the id from URL
     const { id } = this.props.match.params;
 
-    // add new course
+    // return a form if it's on a 'create' route
     if (id === 'create') {
       this.setState({
         course: {},
         isEditing: true
       });
+
       return;
     }
 
     this.setState({ isLoading: true, error: '' });
+
     const onSuccess = (response) => {
       this.course = response.data;
       this.setState({
@@ -56,6 +57,7 @@ class CourseDetailsView extends Component {
         isLoading: false,
       });
     };
+
     const onFail = (error) => {
       this.setState({
         course: null,
@@ -63,6 +65,7 @@ class CourseDetailsView extends Component {
         isLoading: false,
       });
     };
+
     axios.get(`/api/courses/${id}`).then(onSuccess).catch(onFail);
   }
 

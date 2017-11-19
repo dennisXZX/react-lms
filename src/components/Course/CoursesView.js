@@ -30,7 +30,7 @@ class CoursesView extends Component {
 
     // issue a GET request to fetch all courses
     axios.get('/api/courses').then((response) => {
-      CourseStore.addCourses(response.data);
+      CourseStore.loadCourses(response.data);
       this.setState({ isLoading: false });
     });
   }
@@ -57,11 +57,11 @@ class CoursesView extends Component {
   }
 
   renderCourseCard = () => {
-    const { filteredCourses } = this.props.CourseStore;
+    const { CourseStore } = this.props;
 
     return (
       <div className="row">
-        {filteredCourses.map(
+        {CourseStore.filteredCourses.map(
           course => <CourseCard course={course} key={course.id} />
         )}
       </div>
@@ -69,12 +69,12 @@ class CoursesView extends Component {
   }
 
   render() {
-    const { filter, courseCount } = this.props.CourseStore;
+    const { CourseStore } = this.props;
 
     return (
       <div>
-        <h1>Courses ({courseCount} in total)</h1>
-        <div className="row" style={{ margin: '15px 0' }}>
+        <h1>Courses ({CourseStore.courseCount} in total)</h1>
+        <div className="row" style={{ margin: '20px 0' }}>
           <div className="col-sm-6" style={{ padding: '0' }}>
             <Link to="/courses/create" className="btn btn-primary">
               Add new course
@@ -82,7 +82,7 @@ class CoursesView extends Component {
           </div>
           <div className="col-sm-6" style={{ padding: "0" }}>
             <input
-              value={filter}
+              value={CourseStore.filter}
               onChange={this.handleSearchInputChange}
               style={{ paddingLeft: "10px", width: "200px"}}
               className="pull-right"
