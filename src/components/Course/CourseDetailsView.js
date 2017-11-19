@@ -7,7 +7,7 @@ import DetailsCard from '../UI/DetailsCard';
 import DisplayField from '../UI/DisplayField';
 import Spinner from 'react-spinkit';
 import Confirm from 'react-confirm-bootstrap';
-import { statusCodeToError } from '../../utils/index';
+import { statusCodeToError } from '../../utils';
 
 class CourseDetailsView extends Component {
   constructor(props) {
