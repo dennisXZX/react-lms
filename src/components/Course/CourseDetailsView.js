@@ -128,6 +128,7 @@ class CourseDetailsView extends Component {
     // callback function on fulfilled promise
     const onSuccess = (response) => {
       // update the state with the data from API call
+      // set the isEditing to false to exit editing mode
       this.setState({
         isEditing: false,
         isSaving: false,
