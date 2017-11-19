@@ -1,23 +1,25 @@
 import axios from 'axios';
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+// component
 import Button from '../UI/Button';
 import Confirm from 'react-confirm-bootstrap';
 import DetailsCard from '../UI/DetailsCard';
 import DisplayField from '../UI/DisplayField';
 import Gravatar from '../UI/Gravatar';
 import Spinner from '../UI/Spinner';
+
+// utility library
 import { statusCodeToError } from '../../utils';
 
-class StudentDetailsView extends React.Component {
+class StudentDetailsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       isEditing: false,
       isSaving: false,
-      isDeleting: false,
       error: '',
       student: null,
     };
@@ -27,14 +29,26 @@ class StudentDetailsView extends React.Component {
     this.loadStudent();
   }
 
+  /*
+  * Helper methods
+  * */
+
+  // helper method to load a student with the id
   loadStudent() {
+    // retrieve the student id from URL
     const { id } = this.props.match.params;
+
+    // return a form interface if it's on a 'create' route
     if (id === 'create') {
-      this.setState({ student: {}, isEditing: true });
+      this.setState({
+        student: {}, isEditing: true
+      });
+
       return;
     }
 
     this.setState({ isLoading: true, error: '' });
+
     const onSuccess = (response) => {
       this.student = response.data;
       this.setState({
@@ -42,6 +56,7 @@ class StudentDetailsView extends React.Component {
         isLoading: false,
       });
     };
+
     const onFail = (error) => {
       this.setState({
         student: null,
@@ -49,16 +64,15 @@ class StudentDetailsView extends React.Component {
         isLoading: false,
       });
     };
-    axios.get(`/api/students/${id}`).then(onSuccess).catch(onFail);
+
+    axios.get(`/api/students/${id}`)
+      .then(onSuccess)
+      .catch(onFail);
   }
 
   /*
   * Event handlers
   * */
-
-  handleEdit = () => {
-    this.setState({ isEditing: true });
-  }
 
   handleInputChange = (event) => {
     const target = event.target;
@@ -73,19 +87,27 @@ class StudentDetailsView extends React.Component {
     });
   }
 
+  handleEdit = () => {
+    this.setState({ isEditing: true });
+  }
+
   handleSubmit = (event) => {
     event.preventDefault();
 
     this.setState({ isSaving: true });
+
     const { student } = this.state;
+
     const onSuccess = (response) => {
-      this.student = response.data;
+      // update the student state with the data from API call
+      // set the isEditing to false to exit editing mode
       this.setState({
         isEditing: false,
         isSaving: false,
         student: response.data,
       });
     };
+
     if (this.props.match.params.id === 'create') {
       axios.post('/api/students', student)
         .then(onSuccess);
@@ -96,12 +118,14 @@ class StudentDetailsView extends React.Component {
   }
 
   handleCancel = () => {
+    // get the student id parameter from URL
     const { id } = this.props.match.params;
+
+    // check if it's adding new student or editing existing course
     if (id === 'create') {
       this.props.history.push('/students');
     } else {
       this.setState({
-        student: this.student,
         isEditing: false,
       });
     }
@@ -110,7 +134,6 @@ class StudentDetailsView extends React.Component {
   handleConfirmDelete = () => {
     const { student } = this.state;
 
-    this.setState({ isDeleting: true });
     axios.delete(`/api/students/${student.id}`)
       .then(() => {
         this.props.history.push('/students');
@@ -121,8 +144,24 @@ class StudentDetailsView extends React.Component {
   * Render helper methods
   * */
 
+  renderSpinner = () => {
+    return (
+      <DetailsCard>
+        <Spinner />
+      </DetailsCard>
+    )
+  }
+
+  renderError = () => {
+    return (
+      <DetailsCard>
+        <div>{this.state.error}</div>
+      </DetailsCard>
+    )
+  }
+
   renderDisplay = () => {
-    const { student, isDeleting } = this.state;
+    const { student } = this.state;
 
     return (
       <DetailsCard>
@@ -144,6 +183,7 @@ class StudentDetailsView extends React.Component {
             </Confirm>
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
+
         <DisplayField label="Name">{student.first_name} {student.last_name}</DisplayField>
         <DisplayField label="Email">{student.email}</DisplayField>
         <DisplayField label="Courses enrolled" />
@@ -196,15 +236,13 @@ class StudentDetailsView extends React.Component {
           <Button
             type="submit"
             primary
-            disabled={isSaving}
-          >
+            disabled={isSaving}>
             Save
           </Button>
           <Button
             onClick={this.handleCancel}
             disabled={isSaving}
-            style={{ marginLeft: 10 }}
-          >
+            style={{ marginLeft: 10 }}>
             Cancel
           </Button>
         </form>
@@ -216,19 +254,11 @@ class StudentDetailsView extends React.Component {
     const { isLoading, student, error, isEditing } = this.state;
 
     if (isLoading) {
-      return (
-        <DetailsCard>
-          <Spinner />
-        </DetailsCard>
-      );
+      return this.renderSpinner();
     }
 
     if (!isLoading && error) {
-      return (
-        <DetailsCard>
-          <div>{error}</div>
-        </DetailsCard>
-      );
+      return this.renderError();
     }
 
     if (student && !isEditing) {

@@ -2,11 +2,14 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
+// component
 import Button from '../UI/Button';
 import DetailsCard from '../UI/DetailsCard';
 import DisplayField from '../UI/DisplayField';
-import Spinner from 'react-spinkit';
+import Spinner from '../UI/Spinner';
 import Confirm from 'react-confirm-bootstrap';
+
+// utility library
 import { statusCodeToError } from '../../utils';
 
 class CourseDetailsView extends Component {
@@ -35,7 +38,7 @@ class CourseDetailsView extends Component {
 
   // helper method to load a course with the id
   loadCourse = () => {
-    // retrieve the id from URL
+    // retrieve the course id from URL
     const { id } = this.props.match.params;
 
     // return a form interface if it's on a 'create' route
@@ -66,7 +69,9 @@ class CourseDetailsView extends Component {
       });
     };
 
-    axios.get(`/api/courses/${id}`).then(onSuccess).catch(onFail);
+    axios.get(`/api/courses/${id}`)
+      .then(onSuccess)
+      .catch(onFail);
   }
 
   /*
@@ -94,10 +99,10 @@ class CourseDetailsView extends Component {
   }
 
   handleCancel = () => {
-    // get the id parameter from URL
+    // get the course id parameter from URL
     const { id } = this.props.match.params;
 
-    // check if it's it's adding new course or editing existing course
+    // check if it's adding new course or editing existing course
     if (id === 'create') {
       this.props.history.push('/courses');
     } else {
@@ -127,7 +132,7 @@ class CourseDetailsView extends Component {
 
     // callback function on fulfilled promise
     const onSuccess = (response) => {
-      // update the state with the data from API call
+      // update the course state with the data from API call
       // set the isEditing to false to exit editing mode
       this.setState({
         isEditing: false,
@@ -153,9 +158,7 @@ class CourseDetailsView extends Component {
   renderSpinner = () => {
     return (
       <DetailsCard>
-        <div className="spinner">
-          <Spinner name="pacman" color="#3b6db0" />
-        </div>
+        <Spinner />
       </DetailsCard>
     )
   }
