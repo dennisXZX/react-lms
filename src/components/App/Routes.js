@@ -8,6 +8,7 @@ import StudentsView from '../Student/StudentsView';
 import StudentDetailsView from '../Student/StudentDetailsView';
 // import LecturersView from '../Lecturer/LecturersView';
 // import LecturerDetailsView from '../Lecturer/LecturerDetailsView';
+import ExamTimeView from '../ExamTime/ExamTimeView';
 
 export default () => ((
   <Switch>
@@ -18,5 +19,6 @@ export default () => ((
     <Route exact path="/students/:id" component={StudentDetailsView} />
     {/*<Route exact path="/lecturers" component={LecturersView} />*/}
     {/*<Route exact path="/lecturers/:id" component={LecturerDetailsView} />    */}
+    <Route exact path="/examtime" component={ExamTimeView} />
   </Switch>
 ));

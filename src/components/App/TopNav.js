@@ -17,18 +17,11 @@ class TopNav extends Component {
 
           <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul className="nav navbar-nav">
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/courses">Courses</Link>
-              </li>
-              <li>
-                <Link to="/students">Students</Link>
-              </li>
-              <li>
-                <Link to="/lecturers">Lecturers</Link>
-              </li>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/courses">Courses</Link></li>
+              <li><Link to="/students">Students</Link></li>
+              <li><Link to="/lecturers">Lecturers</Link></li>
+              <li><Link to="/examtime">Exam Time</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li className="dropdown">
