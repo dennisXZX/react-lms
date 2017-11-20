@@ -62,6 +62,7 @@ class CoursesView extends Component {
 
   render() {
     const { CourseStore } = this.props;
+    const { isLoading } = this.state;
 
     return (
       <div>
@@ -87,7 +88,7 @@ class CoursesView extends Component {
 
         {/* display course items */}
         <div>
-          { this.state.isLoading ? <Spinner /> : this.renderCourseCard() }
+          { isLoading ? <Spinner /> : this.renderCourseCard() }
         </div>
       </div>
     )

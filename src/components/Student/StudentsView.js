@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Link } from 'react-router-dom';
 
-import StudentItem from './StudentItem';
+import StudentList from './StudentList';
 import Spinner from '../UI/Spinner';
 
 @inject('StudentStore')
@@ -43,24 +43,9 @@ class StudentsView extends Component {
     this.props.StudentStore.filter = event.target.value;
   }
 
-  /*
-  * Render helper methods
-  * */
-
-  renderStudentItem = () => {
-    const { StudentStore } = this.props;
-
-    return (
-      <ul className="list-group">
-        {StudentStore.filteredStudents.map(student => (
-          <StudentItem student={student} key={student.id} />
-        ))}
-      </ul>
-    )
-  }
-
   render() {
     const { StudentStore } = this.props;
+    const { isLoading } = this.state;
 
     return (
       <div>
@@ -87,7 +72,7 @@ class StudentsView extends Component {
         {/* display student items */}
         <div className="row">
           <div className="col-sm-12">
-            {this.state.isLoading ? <Spinner /> : this.renderStudentItem()}
+            {isLoading ? <Spinner /> : <StudentList />}
           </div>
         </div>
       </div>

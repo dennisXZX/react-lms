@@ -8,7 +8,9 @@ export default function StudentItem({ student }) {
     <div className="list-group-item student-item-wrapper">
       <Link to={`/students/${student.id}`}>
         <div className="student-item">
+          {/* avatar */}
           <Gravatar email={student.email} size={40} />
+          {/* student name and email */}
           <div style={{ flex: "1 0 0" }}>
             <div className="student-item-text">
               <div style={{ flex: "1 0 0" }}>
