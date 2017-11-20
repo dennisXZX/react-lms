@@ -4,12 +4,17 @@ import moment from 'moment-timezone';
 import TimeSquare from './TimeSquare';
 
 class TimeClock extends Component {
+
   constructor() {
     super();
 
+    // set the exam time 7 hours from now
+    const examTime = new Date().getTime() + (7 * 60 * 60 * 1000);
+
     this.state = {
-      time: new Date()
+      time: examTime
     }
+
   }
 
   componentDidMount() {
@@ -22,15 +27,21 @@ class TimeClock extends Component {
 
   updateTime = () => {
     this.timeID = setInterval(() => {
+      let { time } = this.state;
+
+      // subtract 1 second from the current time
+      const newLocalDateTime = moment(time).subtract(1, 'seconds');
+
       this.setState({
-        time: new Date()
-      });
-    });
+        time: newLocalDateTime
+      })
+    }, 1000);
   }
 
   render() {
     const { time } = this.state;
-    const { city } = this.props;
+    const { timezone } = this.props;
+    // get the current timezone
     const localDateTime = moment(time).tz('Australia/Sydney');
     const hours = localDateTime.format('HH');
     const minutes = localDateTime.format('mm');
