@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 
+import TimeClock from './TimeClock';
+
 class ExamTimeView extends Component {
+  constructor() {
+    super();
+  }
+
   render() {
     return (
-      <h1>Exam Time</h1>
+      <div>
+        <TimeClock />
+      </div>
     )
   }
 }
