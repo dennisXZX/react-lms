@@ -9,12 +9,11 @@ class TimeClock extends Component {
     super();
 
     // set the exam time 7 hours from now
-    const examTime = new Date().getTime() + (7 * 60 * 60 * 1000);
+    // const examTime = new Date().getTime() + (7 * 60 * 60 * 1000);
 
     this.state = {
-      time: examTime
+      time: new Date().getTime()
     }
-
   }
 
   componentDidMount() {
@@ -27,13 +26,8 @@ class TimeClock extends Component {
 
   updateTime = () => {
     this.timeID = setInterval(() => {
-      let { time } = this.state;
-
-      // subtract 1 second from the current time
-      const newLocalDateTime = moment(time).subtract(1, 'seconds');
-
       this.setState({
-        time: newLocalDateTime
+        time: new Date().getTime()
       })
     }, 1000);
   }

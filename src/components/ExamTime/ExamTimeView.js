@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 
 import TimeClock from './TimeClock';
+import TimeZoneDropDown from './TimeZoneDropDown';
 
 class ExamTimeView extends Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return (
       <div>
         <TimeClock />
+        <TimeZoneDropDown />
       </div>
     )
   }
