@@ -4,7 +4,7 @@ import Spinner from '../UI/Spinner';
 import { inject, observer } from 'mobx-react';
 import axios from 'axios';
 
-import CourseCard from './CourseCard';
+import CourseList from './CourseList';
 
 @inject('CourseStore')
 @observer
@@ -44,22 +44,6 @@ class CoursesView extends Component {
     this.props.CourseStore.filter = event.target.value;
   }
 
-  /*
-  * Render helper methods
-  * */
-
-  renderCourseCard = () => {
-    const { CourseStore } = this.props;
-
-    return (
-      <div className="row">
-        {CourseStore.filteredCourses.map(
-          course => <CourseCard course={course} key={course.id} />
-        )}
-      </div>
-    )
-  }
-
   render() {
     const { CourseStore } = this.props;
     const { isLoading } = this.state;
@@ -88,7 +72,7 @@ class CoursesView extends Component {
 
         {/* display course items */}
         <div>
-          { isLoading ? <Spinner /> : this.renderCourseCard() }
+          { isLoading ? <Spinner /> : <CourseList /> }
         </div>
       </div>
     )
