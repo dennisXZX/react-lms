@@ -41,11 +41,15 @@ class TimeClock extends Component {
     const minutes = localDateTime.format('mm');
     const seconds = localDateTime.format('ss');
 
+    // retrieve the current timezone and manipulate it
+    const [ countryPart, cityPart ] = ExamTimeStore.currentTimezone.split('/');
+
     return (
       <div className="clock">
         <div className="clock-date">
           {localDateTime.format("ddd MMM DD YYYY")}
         </div>
+        <div className="clock-city">{cityPart}, {countryPart} </div>
         <div className="clock-time">
           <TimeSquare number={hours} />
           <span className="clock-time-colon"> : </span>
