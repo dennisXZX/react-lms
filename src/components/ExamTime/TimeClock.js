@@ -47,7 +47,7 @@ class TimeClock extends Component {
     return (
       <div className="clock">
         <div className="clock-date">
-          {localDateTime.format("ddd MMM DD YYYY")}
+          {localDateTime.format("DD MMM YYYY")}
         </div>
         <div className="clock-city">{cityPart}, {countryPart} </div>
         <div className="clock-time">

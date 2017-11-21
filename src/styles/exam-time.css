@@ -15,7 +15,7 @@
 }
 
 .clock-city {
-  background-color: #337ab7;
+  background-color: #74a9d8;
   font-size: 20px;
   height: 50px;
   line-height: 50px;
@@ -23,7 +23,7 @@
 }
 
 .clock-time {
-  padding: 80px 30px;
+  padding: 40px 30px 80px 30px;
   display: flex;
 }
 
