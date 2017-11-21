@@ -8,13 +8,19 @@ class TimeZoneDropDown extends Component {
   handleChange = (event) => {
     const { ExamTimeStore } = this.props;
 
+    // set the store value
     ExamTimeStore.currentTimezone = event.target.value;
-    console.log(ExamTimeStore.currentTimezone);
   }
 
   render() {
     const { ExamTimeStore } = this.props;
-    const timezoneList = moment.tz.names();
+
+    // retrieve timezone list from moment.js
+    const timezoneList = moment.tz.names()
+      // filter out shorten timezone name such as "CET", and timezone like "Etc/GMT+0"
+      .filter((timezone) => {
+        return timezone.indexOf('/') >= 0 && timezone.substring(0, 3) !== 'Etc';
+      })
 
     const timezoneOptions = timezoneList.map((timezone) => {
       return (
@@ -26,8 +32,9 @@ class TimeZoneDropDown extends Component {
 
     return (
       <div>
-        <ul>
+        <ul style={{ padding: '0' }}>
           <select className='form-control'
+                  style={{ width: '260px', margin: '0 auto' }}
                   onChange={this.handleChange}
                   value={ExamTimeStore.currentTimezone}>
             {timezoneOptions}

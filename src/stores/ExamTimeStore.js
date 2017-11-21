@@ -1,8 +1,7 @@
-import { observable, action, computed } from 'mobx';
+import { observable } from 'mobx';
 
 class ExamTimeStore {
   @observable currentTimezone = 'Australia/Sydney';
-
 }
 
 const store = new ExamTimeStore();
