@@ -155,14 +155,6 @@ class CourseDetailsView extends Component {
   * Render helper methods
   * */
 
-  renderSpinner = () => {
-    return (
-      <DetailsCard>
-        <Spinner />
-      </DetailsCard>
-    )
-  }
-
   renderError = () => {
     return (
       <DetailsCard>
@@ -293,7 +285,7 @@ class CourseDetailsView extends Component {
 
     // render a loading spinner
     if (isLoading) {
-      return this.renderSpinner();
+      return <Spinner />;
     }
 
     // render an error message

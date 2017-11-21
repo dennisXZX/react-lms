@@ -144,14 +144,6 @@ class StudentDetailsView extends Component {
   * Render helper methods
   * */
 
-  renderSpinner = () => {
-    return (
-      <DetailsCard>
-        <Spinner />
-      </DetailsCard>
-    )
-  }
-
   renderError = () => {
     return (
       <DetailsCard>
@@ -254,7 +246,7 @@ class StudentDetailsView extends Component {
     const { isLoading, student, error, isEditing } = this.state;
 
     if (isLoading) {
-      return this.renderSpinner();
+      return <Spinner />;
     }
 
     if (!isLoading && error) {
