@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import moment from 'moment-timezone';
 
 import TimeSquare from './TimeSquare';
 
+@inject('ExamTimeStore')
+@observer
 class TimeClock extends Component {
 
   constructor() {
     super();
-
-    // set the exam time 7 hours from now
-    // const examTime = new Date().getTime() + (7 * 60 * 60 * 1000);
 
     this.state = {
       time: new Date().getTime()
@@ -34,9 +34,9 @@ class TimeClock extends Component {
 
   render() {
     const { time } = this.state;
-    const { timezone } = this.props;
+    const { ExamTimeStore } = this.props;
     // get the current timezone
-    const localDateTime = moment(time).tz('Australia/Sydney');
+    const localDateTime = moment(time).tz(ExamTimeStore.currentTimezone);
     const hours = localDateTime.format('HH');
     const minutes = localDateTime.format('mm');
     const seconds = localDateTime.format('ss');

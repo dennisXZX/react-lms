@@ -8,6 +8,7 @@ import Shell from './components/App/Shell';
 
 import CourseStore from './stores/CourseStore';
 import StudentStore from './stores/StudentStore';
+import ExamTimeStore from './stores/ExamTimeStore';
 
 import './styles';
 
@@ -21,7 +22,8 @@ ReactDOM.render(
   <Router>
     <Provider
       CourseStore={CourseStore}
-      StudentStore={StudentStore}>
+      StudentStore={StudentStore}
+      ExamTimeStore={ExamTimeStore}>
       <Shell />
     </Provider>
   </Router>,

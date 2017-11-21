@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
 import moment from 'moment-timezone';
 
+@inject('ExamTimeStore')
+@observer
 class TimeZoneDropDown extends Component {
-  handleChange = () => {
-    console.log('changed');
+  handleChange = (event) => {
+    const { ExamTimeStore } = this.props;
+
+    ExamTimeStore.currentTimezone = event.target.value;
+    console.log(ExamTimeStore.currentTimezone);
   }
 
   render() {
+    const { ExamTimeStore } = this.props;
     const timezoneList = moment.tz.names();
 
     const timezoneOptions = timezoneList.map((timezone) => {
@@ -21,7 +28,8 @@ class TimeZoneDropDown extends Component {
       <div>
         <ul>
           <select className='form-control'
-                  onChange={this.handleChange}>
+                  onChange={this.handleChange}
+                  value={ExamTimeStore.currentTimezone}>
             {timezoneOptions}
           </select>
         </ul>
