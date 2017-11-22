@@ -11,6 +11,7 @@ import Spinner from '../UI/Spinner';
 class StudentsView extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isLoading: false
     };
