@@ -1,159 +1,12 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 
-// component
 import Button from '../UI/Button';
 import DetailsCard from '../UI/DetailsCard';
 import DisplayField from '../UI/DisplayField';
 import Spinner from '../UI/Spinner';
 import Confirm from 'react-confirm-bootstrap';
 
-// utility library
-import { statusCodeToError } from '../../utils';
-
 class CourseDetailsView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      isEditing: false,
-      isSaving: false,
-      error: '',
-      course: null,
-    };
-  }
-
-  /*
-  * components life cycle methods
-  * */
-
-  componentDidMount() {
-    this.loadCourse();
-  }
-
-  /*
-  * Helper methods
-  * */
-
-  // helper method to load a course with the id
-  loadCourse = () => {
-    // retrieve the course id from URL
-    const { id } = this.props.match.params;
-
-    // return a form interface if it's on a 'create' route
-    if (id === 'create') {
-      this.setState({
-        course: {},
-        isEditing: true
-      });
-
-      return;
-    }
-
-    this.setState({ isLoading: true, error: '' });
-
-    const onSuccess = (response) => {
-      this.course = response.data;
-      this.setState({
-        course: response.data,
-        isLoading: false,
-      });
-    };
-
-    const onFail = (error) => {
-      this.setState({
-        course: null,
-        error: statusCodeToError(error.response.status),
-        isLoading: false,
-      });
-    };
-
-    axios.get(`/api/courses/${id}`)
-      .then(onSuccess)
-      .catch(onFail);
-  }
-
-  /*
-  * Event handlers
-  * */
-
-  handleInputChange = (event) => {
-    // get a reference to the object that dispatched the event
-    const target = event.target;
-    // get the value from the node
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    // store the value into state
-    this.setState({
-      course: {
-        ...this.state.course,
-        [name]: value,
-      },
-    });
-  }
-
-  handleEdit = () => {
-    this.setState({ isEditing: true });
-  }
-
-  handleCancel = () => {
-    // get the course id parameter from URL
-    const { id } = this.props.match.params;
-
-    // check if it's adding new course or editing existing course
-    if (id === 'create') {
-      this.props.history.push('/courses');
-    } else {
-      this.setState({
-        isEditing: false
-      });
-    }
-  }
-
-  handleConfirmDelete = () => {
-    const { course } = this.state;
-
-    this.setState({ isDeleting: true });
-    axios.delete(`/api/courses/${course.id}`)
-      .then(() => {
-        this.props.history.push('/courses');
-      });
-  }
-
-  handleSubmit = (event) => {
-    // prevent the default submit action
-    event.preventDefault();
-
-    this.setState({ isSaving: true });
-
-    const { course } = this.state;
-
-    // callback function on fulfilled promise
-    const onSuccess = (response) => {
-      // update the course state with the data from API call
-      // set the isEditing to false to exit editing mode
-      this.setState({
-        isEditing: false,
-        isSaving: false,
-        course: response.data,
-      });
-    };
-
-    if (this.props.match.params.id === 'create') {
-      axios.post('/api/courses', course)
-        .then(onSuccess);
-    } else {
-      axios.put(`/api/courses/${course.id}`, course)
-        .then(onSuccess);
-    }
-
-  }
-
-  /*
-  * Render helper methods
-  * */
 
   renderError = () => {
     return (
@@ -164,7 +17,7 @@ class CourseDetailsView extends Component {
   }
 
   renderDisplay = () => {
-    const { course } = this.state;
+    const { course, handleEdit, handleConfirmDelete } = this.props;
 
     return (
       <DetailsCard>
@@ -173,12 +26,12 @@ class CourseDetailsView extends Component {
           <DetailsCard.ButtonGroup>
             <Button
               primary
-              onClick={this.handleEdit}
+              onClick={handleEdit}
               style={{ marginRight: 10 }}>
               Edit
             </Button>
             <Confirm
-              onConfirm={this.handleConfirmDelete}
+              onConfirm={handleConfirmDelete}
               body="Are you sure you want to delete this course?"
               confirmText="Confirm Delete"
               title="Deleting Course">
@@ -196,11 +49,14 @@ class CourseDetailsView extends Component {
   }
 
   renderForm = () => {
-    const { course, isSaving } = this.state;
+    const {
+      course, isSaving,
+      handleSubmit, handleInputChange, handleCancel
+    } = this.state;
 
     return (
       <DetailsCard>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">Name</label>
             <input
@@ -209,7 +65,7 @@ class CourseDetailsView extends Component {
               placeholder="Name"
               value={course.name || ''}
               name="name"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               id="name"
             />
           </div>
@@ -221,7 +77,7 @@ class CourseDetailsView extends Component {
               placeholder="Code"
               value={course.code || ''}
               name="code"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               id="code"
             />
           </div>
@@ -233,7 +89,7 @@ class CourseDetailsView extends Component {
               placeholder="DD/MM/YYYY"
               value={course.start_at || ''}
               name="start_at"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               id="start-at"
             />
           </div>
@@ -245,7 +101,7 @@ class CourseDetailsView extends Component {
               placeholder="DD/MM/YYYY"
               value={course.end_at || ''}
               name="end_at"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               id="end-at"
             />
           </div>
@@ -256,7 +112,7 @@ class CourseDetailsView extends Component {
               placeholder="Introduction"
               value={course.introduction || ''}
               name="introduction"
-              onChange={this.handleInputChange}
+              onChange={handleInputChange}
               style={{ height: 100 }}
               id="introduction"
             />
@@ -269,7 +125,7 @@ class CourseDetailsView extends Component {
             Save
           </Button>
           <Button
-            onClick={this.handleCancel}
+            onClick={handleCancel}
             disabled={isSaving}
             style={{ marginLeft: 10 }}
           >
@@ -281,7 +137,7 @@ class CourseDetailsView extends Component {
   }
 
   render() {
-    const { isLoading, course, error, isEditing } = this.state;
+    const { isLoading, course, error, isEditing } = this.props;
 
     // render a loading spinner
     if (isLoading) {
@@ -307,4 +163,4 @@ class CourseDetailsView extends Component {
   }
 }
 
-export default withRouter(CourseDetailsView);
+export default CourseDetailsView;

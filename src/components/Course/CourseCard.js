@@ -21,7 +21,7 @@ class CourseCard extends Component {
   }
 
   render() {
-    const course = this.props.course;
+    const { course } = this.props;
 
     return (
       <div className="col-sm-6 col-md-3">
