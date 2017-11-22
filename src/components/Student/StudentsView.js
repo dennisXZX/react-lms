@@ -40,13 +40,7 @@ class StudentsView extends Component {
     return (
       <div>
         <StudentsViewHeader />
-
-        {/* display student items */}
-        <div className="row">
-          <div className="col-sm-12">
-            {isLoading ? <Spinner /> : <StudentList />}
-          </div>
-        </div>
+        {isLoading ? <Spinner /> : <StudentList />}
       </div>
     );
   }
