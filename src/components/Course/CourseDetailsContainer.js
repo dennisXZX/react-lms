@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import CourseDetailsView from './CourseDetailsView';
 
-// utility library
 import { statusCodeToError } from '../../utils';
 
 class CourseDetailsContainer extends Component {
@@ -22,6 +21,10 @@ class CourseDetailsContainer extends Component {
   componentDidMount() {
     this.loadCourse();
   }
+
+  /*
+  * Helper methods
+  * */
 
   // helper method to load a course with the id
   loadCourse = () => {
@@ -137,10 +140,6 @@ class CourseDetailsContainer extends Component {
     }
 
   }
-
-  /*
-  * Render helper methods
-  * */
 
   render() {
     return (

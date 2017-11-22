@@ -4,7 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import StudentDetailsView from './StudentDetailsView';
 
-// utility library
 import { statusCodeToError } from '../../utils';
 
 class StudentDetailsContainer extends Component {

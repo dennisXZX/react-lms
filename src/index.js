@@ -18,6 +18,9 @@ import registerServiceWorker from './registerServiceWorker';
 // set a default URL that applies to every request
 axios.defaults.baseURL = 'http://react.fail';
 
+// API is hosted on AWS EC2
+// axios.defaults.baseURL = 'http://52.65.68.185/';
+
 ReactDOM.render(
   <Router>
     <Provider
