@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Spinner from '../UI/Spinner';
 import { inject, observer } from 'mobx-react';
-import axios from 'axios';
 
 import CoursesViewHeader from './CoursesViewHeader';
 import CourseList from './CourseList';
+
+import { getAllCourses } from '../../api/courseApi';
 
 @inject('CourseStore')
 @observer
@@ -28,11 +29,14 @@ class CoursesView extends Component {
 
     this.setState({ isLoading: true });
 
-    // issue a GET request to fetch all courses
-    axios.get('/api/courses').then((response) => {
+    const onSuccess = (response) => {
       CourseStore.loadCourses(response.data);
       this.setState({ isLoading: false });
-    });
+    };
+
+    // fetch all courses
+    getAllCourses()
+      .then(onSuccess);
   }
 
   render() {

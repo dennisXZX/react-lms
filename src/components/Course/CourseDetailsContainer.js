@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import CourseDetailsView from './CourseDetailsView';
 
+import { getCourse } from '../../api/courseApi';
 import { statusCodeToError } from '../../utils';
 
 class CourseDetailsContainer extends Component {
@@ -59,7 +60,7 @@ class CourseDetailsContainer extends Component {
       });
     };
 
-    axios.get(`/api/courses/${id}`)
+    getCourse(id)
       .then(onSuccess)
       .catch(onFail);
   }
