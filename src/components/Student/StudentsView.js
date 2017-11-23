@@ -1,10 +1,11 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
 import StudentList from './StudentList';
 import StudentsViewHeader from './StudentsViewHeader';
 import Spinner from '../UI/Spinner';
+
+import { getAllStudents } from '../../api/studentApi';
 
 @inject('StudentStore')
 @observer
@@ -26,13 +27,14 @@ class StudentsView extends Component {
 
     this.setState({ isLoading: true });
 
-    axios.get('/api/students').then((response) => {
-      StudentStore.loadStudents(response.data);
+    getAllStudents()
+      .then((response) => {
+        StudentStore.loadStudents(response.data);
 
-      this.setState({
-        isLoading: false
+        this.setState({
+          isLoading: false
+        });
       });
-    });
   }
 
   render() {
