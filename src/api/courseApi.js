@@ -11,3 +11,11 @@ export const getCourse = (id) => {
 export const deleteCourse = (id) => {
   return axios.delete(`/api/courses/${id}`);
 }
+
+export const createCourse = (course) => {
+  return axios.post('/api/courses', course);
+}
+
+export const updateCourse = (id, course) => {
+  return axios.put(`/api/courses/${id}`, course);
+}

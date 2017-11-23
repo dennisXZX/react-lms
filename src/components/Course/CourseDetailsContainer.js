@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import CourseDetailsView from './CourseDetailsView';
 
-import { getCourse, deleteCourse } from '../../api/courseApi';
+import { getCourse, deleteCourse, createCourse, updateCourse } from '../../api/courseApi';
 import { statusCodeToError } from '../../utils';
 
 class CourseDetailsContainer extends Component {
@@ -134,10 +134,10 @@ class CourseDetailsContainer extends Component {
     };
 
     if (this.props.match.params.id === 'create') {
-      axios.post('/api/courses', course)
+      createCourse(course)
         .then(onSuccess);
     } else {
-      axios.put(`/api/courses/${course.id}`, course)
+      updateCourse(course.id, course)
         .then(onSuccess);
     }
 
