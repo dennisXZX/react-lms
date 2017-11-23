@@ -52,7 +52,7 @@ class CourseDetailsView extends Component {
     const {
       course, isSaving,
       handleSubmit, handleInputChange, handleCancel
-    } = this.state;
+    } = this.props;
 
     return (
       <DetailsCard>
