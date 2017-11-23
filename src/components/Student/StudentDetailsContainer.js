@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import StudentDetailsView from './StudentDetailsView';
 
+import { getStudent, deleteStudent, createStudent, updateStudent } from '../../api/studentApi';
 import { statusCodeToError } from '../../utils';
 
 class StudentDetailsContainer extends Component {
@@ -58,7 +59,8 @@ class StudentDetailsContainer extends Component {
       });
     };
 
-    axios.get(`/api/students/${id}`)
+    // retrieve all the students
+    getStudent(id)
       .then(onSuccess)
       .catch(onFail);
   }
@@ -102,10 +104,10 @@ class StudentDetailsContainer extends Component {
     };
 
     if (this.props.match.params.id === 'create') {
-      axios.post('/api/students', student)
+      createStudent(student)
         .then(onSuccess);
     } else {
-      axios.put(`/api/students/${student.id}`, student)
+      updateStudent(student.id, student)
         .then(onSuccess);
     }
   }
@@ -127,7 +129,7 @@ class StudentDetailsContainer extends Component {
   handleConfirmDelete = () => {
     const { student } = this.state;
 
-    axios.delete(`/api/students/${student.id}`)
+    deleteStudent(student.id)
       .then(() => {
         this.props.history.push('/students');
       });

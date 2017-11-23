@@ -60,6 +60,7 @@ class CourseDetailsContainer extends Component {
       });
     };
 
+    // retrieve all the courses
     getCourse(id)
       .then(onSuccess)
       .catch(onFail);
