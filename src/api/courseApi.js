@@ -7,3 +7,7 @@ export const getAllCourses = () => {
 export const getCourse = (id) => {
   return axios.get(`/api/courses/${id}`);
 }
+
+export const deleteCourse = (id) => {
+  return axios.delete(`/api/courses/${id}`);
+}

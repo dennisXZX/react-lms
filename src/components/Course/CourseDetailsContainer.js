@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import CourseDetailsView from './CourseDetailsView';
 
-import { getCourse } from '../../api/courseApi';
+import { getCourse, deleteCourse } from '../../api/courseApi';
 import { statusCodeToError } from '../../utils';
 
 class CourseDetailsContainer extends Component {
@@ -107,7 +107,8 @@ class CourseDetailsContainer extends Component {
     const { course } = this.state;
 
     this.setState({ isDeleting: true });
-    axios.delete(`/api/courses/${course.id}`)
+
+    deleteCourse(course.id)
       .then(() => {
         this.props.history.push('/courses');
       });
