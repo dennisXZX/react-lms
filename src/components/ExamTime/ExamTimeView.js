@@ -10,6 +10,7 @@ class ExamTimeView extends Component {
       <div className="text-center">
         <ExamTimeHeader />
         <TimeClock />
+        <h4>Select your timezone</h4>
         <TimeZoneDropDown />
       </div>
     )

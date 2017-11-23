@@ -7,7 +7,7 @@ class ExamTimeHeader extends Component {
     const { ExamTimeStore } = this.props;
 
     return (
-      <h2>Your next exam is due on {ExamTimeStore.examTime}</h2>
+      <h2>Next exam is on {ExamTimeStore.examTime}</h2>
     )
   }
 }
