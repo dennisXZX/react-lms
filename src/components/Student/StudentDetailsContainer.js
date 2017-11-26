@@ -3,7 +3,11 @@ import { withRouter } from 'react-router-dom';
 
 import StudentDetailsView from './StudentDetailsView';
 
-import { getStudent, deleteStudent, createStudent, updateStudent } from '../../api/studentApi';
+import {
+  getStudent, deleteStudent,
+  createStudent, updateStudent
+} from '../../api/studentApi';
+
 import { statusCodeToError } from '../../utils';
 
 class StudentDetailsContainer extends Component {

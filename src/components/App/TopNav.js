@@ -22,6 +22,7 @@ class TopNav extends Component {
               <li><Link to="/students">Students</Link></li>
               <li><Link to="/lecturers">Lecturers</Link></li>
               <li><Link to="/examtime">Exam Time</Link></li>
+              <li><Link to="/todo">Todo</Link></li>
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li className="dropdown">

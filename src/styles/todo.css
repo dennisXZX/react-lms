@@ -1,0 +1,36 @@
+.todo-container {
+  width: 600px;
+  margin: 20px auto;
+}
+
+.todo-form {
+  margin-bottom: 15px;
+}
+
+.todo-item {
+  display: flex;
+}
+
+.todo-item__name {
+  flex: 1 1 0;
+}
+
+.todo-item__check,
+.todo-item__trash {
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.todo-item--completed .todo-item__name {
+  text-decoration: line-through;
+  font-style: italic;
+  color: #666;
+}
+
+.todo-item--completed .todo-item__check {
+  color: rgb(39, 203, 39);
+}
+
+.todo-filter {
+  padding: 0 10px 15px;
+}

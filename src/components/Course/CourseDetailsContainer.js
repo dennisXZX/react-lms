@@ -3,7 +3,11 @@ import { withRouter } from 'react-router-dom';
 
 import CourseDetailsView from './CourseDetailsView';
 
-import { getCourse, deleteCourse, createCourse, updateCourse } from '../../api/courseApi';
+import {
+  getCourse, deleteCourse,
+  createCourse, updateCourse
+} from '../../api/courseApi';
+
 import { statusCodeToError } from '../../utils';
 
 class CourseDetailsContainer extends Component {
