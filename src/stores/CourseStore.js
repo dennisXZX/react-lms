@@ -1,11 +1,18 @@
 import { observable, action, computed } from 'mobx';
 
+import { getAllCourses } from '../api/courseApi';
+
 class CourseStore {
+  @observable courseViewLoading = false;
   @observable courses = [];
   @observable filter = '';
 
-  @action loadCourses(courses) {
-    this.courses = courses;
+  @action loadCourses() {
+    // get all the courses from API
+    getAllCourses().then((response) => {
+      this.courses = response.data;
+      this.courseViewLoading = false;
+    });
   }
 
   @computed get filteredCourses() {
