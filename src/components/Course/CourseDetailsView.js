@@ -25,7 +25,7 @@ class CourseDetailsView extends Component {
           <h1>{course.name}</h1>
           <DetailsCard.ButtonGroup>
             <Button
-              primary
+              buttonStyle="primary"
               onClick={handleEdit}
               style={{ marginRight: 10 }}>
               Edit
@@ -35,7 +35,7 @@ class CourseDetailsView extends Component {
               body="Are you sure you want to delete this course?"
               confirmText="Confirm Delete"
               title="Deleting Course">
-              <Button danger>Delete</Button>
+              <Button buttonStyle="danger">Delete</Button>
             </Confirm>
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
@@ -118,7 +118,7 @@ class CourseDetailsView extends Component {
             />
           </div>
           <Button
-            primary
+            buttonStyle="primary"
             type="submit"
             disabled={isSaving}
           >

@@ -26,7 +26,7 @@ class StudentDetailsView extends Component {
           <Gravatar email={student.email} />
           <DetailsCard.ButtonGroup>
             <Button
-              primary
+              buttonStyle="primary"
               style={{ marginRight: 10 }}
               onClick={handleEdit}>
               Edit
@@ -36,7 +36,7 @@ class StudentDetailsView extends Component {
               body="Are you sure you want to delete this student?"
               confirmText="Confirm Delete"
               title="Deleting Student">
-              <Button danger>Delete</Button>
+              <Button buttonStyle="danger">Delete</Button>
             </Confirm>
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
@@ -95,7 +95,7 @@ class StudentDetailsView extends Component {
           </div>
           <Button
             type="submit"
-            primary
+            buttonStyle="primary"
             disabled={isSaving}>
             Save
           </Button>

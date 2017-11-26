@@ -2,16 +2,18 @@
 import joinClassNames from 'classnames';
 import React from 'react';
 
-const Button = ({ children, primary, danger, buttonType = 'button', ...rest }) => {
+const Button = ({ children, buttonStyle, buttonType = 'button', ...rest }) => {
 
   // assign a different button style based on the value of props
-  let buttonStyle = 'btn-default';
-
-  if (primary) {
-    buttonStyle = 'btn-primary';
-  }
-  if (danger) {
-    buttonStyle = 'btn-danger';
+  switch (buttonStyle) {
+    case 'primary':
+      buttonStyle = 'btn-primary';
+      break;
+    case 'danger':
+      buttonStyle = 'btn-danger';
+      break;
+    default:
+      buttonStyle = 'btn-default';
   }
 
   return (
