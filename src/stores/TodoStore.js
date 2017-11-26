@@ -1,11 +1,20 @@
 import { observable, action, computed } from 'mobx';
 
+import { createTodoAPI } from '../api/todoApi';
+
 class TodoStore {
   @observable todos = [];
   @observable filter = '';
 
   @action loadTodos(todos) {
     this.todos = todos;
+  }
+
+  @action addTodo(todo) {
+    createTodoAPI(todo)
+      .then((response) => {
+        this.todos.push(response.data);
+      })
   }
 
   @computed get filteredTodos() {

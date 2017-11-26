@@ -6,7 +6,7 @@ import TodoInput from './TodoInput';
 import TodoFilter from './TodoFilter';
 import TodoList from './TodoList';
 
-import { getAllTodos } from '../../api/todoApi';
+import { getAllTodosAPI } from '../../api/todoApi';
 
 @inject('TodoStore')
 @observer
@@ -32,7 +32,7 @@ class TodoView extends Component {
     };
 
     // fetch all todos
-    getAllTodos()
+    getAllTodosAPI()
       .then(onSuccess);
   }
 

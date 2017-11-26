@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { createTodo, getAllTodos } from '../../api/todoApi';
-
 @inject('TodoStore')
 @observer
 class TodoInput extends Component {
@@ -31,20 +29,10 @@ class TodoInput extends Component {
     const newItemName = this.state.newItemName.trim();
 
     // create an item through API
-    createTodo({
+    TodoStore.addTodo({
       name: newItemName,
       completed: 0
-    })
-
-    // update the store
-    const onSuccess = (response) => {
-      console.log(response.data);
-      TodoStore.loadTodos(response.data);
-    };
-
-    // fetch all todos
-    getAllTodos()
-      .then(onSuccess);
+    });
 
   }
 

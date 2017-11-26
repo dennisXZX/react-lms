@@ -1,21 +1,21 @@
 import axios from 'axios';
 
-export const getAllTodos = () => {
+export const getAllTodosAPI = () => {
   return axios.get('/api/todos');
 }
 
-export const getTodo = (id) => {
+export const getTodoAPI = (id) => {
   return axios.get(`/api/todos/${id}`);
 }
 
-export const deleteTodo = (id) => {
+export const deleteTodoAPI = (id) => {
   return axios.delete(`/api/todos/${id}`);
 }
 
-export const createTodo = (todo) => {
+export const createTodoAPI = (todo) => {
   return axios.post('/api/todos', todo);
 }
 
-export const updateTodo = (id, todo) => {
+export const updateTodoAPI = (id, todo) => {
   return axios.put(`/api/todos/${id}`, todo);
 }
