@@ -1,11 +1,17 @@
 import { observable, action, computed } from 'mobx';
 
+import { getAllStudents } from '../api/studentApi';
+
 class StudentStore {
+  @observable studentsViewLoading = false;
   @observable students = [];
   @observable filter = '';
 
-  @action loadStudents(students) {
-    this.students = students;
+  @action loadStudents() {
+    getAllStudents().then((response) => {
+      this.students = response.data;
+      this.studentsViewLoading = false;
+    })
   }
 
   @computed get filteredStudents() {

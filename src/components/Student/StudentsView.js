@@ -5,18 +5,9 @@ import StudentList from './StudentList';
 import StudentsViewHeader from './StudentsViewHeader';
 import Spinner from '../UI/Spinner';
 
-import { getAllStudents } from '../../api/studentApi';
-
 @inject('StudentStore')
 @observer
 class StudentsView extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: false
-    };
-  }
 
   componentDidMount() {
     this.loadStudents();
@@ -25,25 +16,18 @@ class StudentsView extends Component {
   loadStudents = () => {
     const { StudentStore } = this.props;
 
-    this.setState({ isLoading: true });
+    StudentStore.studentsViewLoading = true;
 
-    getAllStudents()
-      .then((response) => {
-        StudentStore.loadStudents(response.data);
-
-        this.setState({
-          isLoading: false
-        });
-      });
+    StudentStore.loadStudents();
   }
 
   render() {
-    const { isLoading } = this.state;
+    const { studentsViewLoading } = this.props.StudentStore;
 
     return (
       <div>
         <StudentsViewHeader />
-        {isLoading ? <Spinner /> : <StudentList />}
+        {studentsViewLoading ? <Spinner /> : <StudentList />}
       </div>
     );
   }
