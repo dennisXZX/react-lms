@@ -4,6 +4,12 @@
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
 }
 
+.details-card .go-back {
+  border-bottom: 1px solid #337ab7;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
 .details-card-header {
   display: flex;
 }
@@ -11,6 +17,6 @@
 .details-card-button-group {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
+  align-items: start;
   height: 100%;
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Button from '../UI/Button';
 import Confirm from 'react-confirm-bootstrap';
@@ -22,6 +23,11 @@ class StudentDetailsView extends Component {
 
     return (
       <DetailsCard>
+        <div className="row go-back">
+          <div className="col-sm-12">
+            <Link to="/students">Back</Link>
+          </div>
+        </div>
         <DetailsCard.Header>
           <Gravatar email={student.email} />
           <DetailsCard.ButtonGroup>
