@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import Button from '../UI/Button';
 import DetailsCard from '../UI/DetailsCard';
@@ -21,6 +22,11 @@ class CourseDetailsView extends Component {
 
     return (
       <DetailsCard>
+        <div className="row go-back">
+          <div className="col-sm-12">
+            <Link to="/courses">Back</Link>
+          </div>
+        </div>
         <DetailsCard.Header>
           <h1>{course.name}</h1>
           <DetailsCard.ButtonGroup>
