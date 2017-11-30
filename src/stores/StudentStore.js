@@ -1,17 +1,74 @@
 import { observable, action, computed } from 'mobx';
 
-import { getAllStudents } from '../api/studentApi';
+import {
+  getAllStudents, getStudent, deleteStudent, createStudent, updateStudent
+} from '../api/studentApi';
+
+import { statusCodeToError } from '../utils';
 
 class StudentStore {
-  @observable studentsViewLoading = false;
+  @observable studentsListLoading = false;
   @observable students = [];
   @observable filter = '';
+  @observable studentDetailsLoading = false;
+  @observable studentDetailsEditing = false;
+  @observable studentDetailsSaving = false;
+  @observable error = '';
+  @observable student = null;
 
-  @action loadStudents() {
+  @action getAllStudents() {
     getAllStudents().then((response) => {
       this.students = response.data;
-      this.studentsViewLoading = false;
+      this.studentsListLoading = false;
     })
+  }
+
+  @action getStudent(id) {
+    const onSuccess = (response) => {
+      this.student = response.data;
+      this.studentDetailsLoading = false;
+    };
+
+    const onFail = (error) => {
+        this.student = null;
+        this.error = statusCodeToError(error.response.status);
+        this.studentDetailsLoading = false;
+    };
+
+    getStudent(id)
+      .then(onSuccess)
+      .catch(onFail);
+  }
+
+  @action createStudent(student) {
+
+    const onSuccess = (response) => {
+      // update the student state with the data from API call
+      // set the isEditing to false to exit editing mode
+      this.studentDetailsEditing = false;
+      this.studentDetailsSaving = false;
+      this.student = response.data;
+    };
+
+    createStudent(student)
+      .then(onSuccess);
+  }
+
+  @action updateStudent(id, student) {
+    const onSuccess = (response) => {
+      // update the student state with the data from API call
+      // set the isEditing to false to exit editing mode
+      this.studentDetailsEditing = false;
+      this.studentDetailsSaving = false;
+      this.student = response.data;
+    };
+
+    updateStudent(id, student)
+      .then(onSuccess);
+  }
+
+  @action deleteStudent(id) {
+    deleteStudent(id);
   }
 
   @computed get filteredStudents() {

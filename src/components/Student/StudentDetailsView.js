@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import Button from '../UI/Button';
 import Confirm from 'react-confirm-bootstrap';
@@ -8,18 +9,23 @@ import DisplayField from '../UI/DisplayField';
 import Gravatar from '../UI/Gravatar';
 import Spinner from '../UI/Spinner';
 
+@inject('StudentStore')
+@observer
 class StudentDetailsView extends Component {
 
   renderError = () => {
+    const { StudentStore } = this.props;
+
     return (
       <DetailsCard>
-        <div>{this.state.error}</div>
+        <div>{StudentStore.error}</div>
       </DetailsCard>
     )
   }
 
   renderDisplay = () => {
-    const { student, handleEdit, handleConfirmDelete } = this.props;
+    const { StudentStore } = this.props;
+    const { handleEdit, handleConfirmDelete } = this.props;
 
     return (
       <DetailsCard>
@@ -29,7 +35,7 @@ class StudentDetailsView extends Component {
           </div>
         </div>
         <DetailsCard.Header>
-          <Gravatar email={student.email} />
+          <Gravatar email={StudentStore.student.email} />
           <DetailsCard.ButtonGroup>
             <Button
               buttonStyle="primary"
@@ -47,18 +53,22 @@ class StudentDetailsView extends Component {
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
 
-        <DisplayField label="Name">{student.first_name} {student.last_name}</DisplayField>
-        <DisplayField label="Email">{student.email}</DisplayField>
-        <DisplayField label="Courses enrolled" />
+        <DisplayField label="Name">
+          {StudentStore.student.first_name} {StudentStore.student.last_name}
+        </DisplayField>
+        <DisplayField label="Email">
+          {StudentStore.student.email}
+        </DisplayField>
+        <DisplayField label="Courses enrolled" >
+          hello
+        </DisplayField>
       </DetailsCard>
     );
   }
 
   renderForm = () => {
-    const {
-      student, isSaving,
-      handleSubmit, handleInputChange, handleCancel
-    } = this.props;
+    const { StudentStore } = this.props;
+    const { handleSubmit, handleInputChange, handleCancel } = this.props;
 
     return (
       <DetailsCard>
@@ -69,7 +79,7 @@ class StudentDetailsView extends Component {
               type="text"
               className="form-control"
               placeholder="First name"
-              value={student.first_name || ''}
+              value={StudentStore.student.first_name || ''}
               name="first_name"
               onChange={handleInputChange}
               id="first-name"
@@ -81,7 +91,7 @@ class StudentDetailsView extends Component {
               type="text"
               className="form-control"
               placeholder="Last name"
-              value={student.last_name || ''}
+              value={StudentStore.student.last_name || ''}
               name="last_name"
               onChange={handleInputChange}
               id="last-name"
@@ -93,7 +103,7 @@ class StudentDetailsView extends Component {
               type="email"
               className="form-control"
               placeholder="Email"
-              value={student.email || ''}
+              value={StudentStore.student.email || ''}
               name="email"
               onChange={handleInputChange}
               id="email"
@@ -102,12 +112,12 @@ class StudentDetailsView extends Component {
           <Button
             type="submit"
             buttonStyle="primary"
-            disabled={isSaving}>
+            disabled={StudentStore.studentDetailsSaving}>
             Save
           </Button>
           <Button
             onClick={handleCancel}
-            disabled={isSaving}
+            disabled={StudentStore.studentDetailsSaving}
             style={{ marginLeft: 10 }}>
             Cancel
           </Button>
@@ -117,21 +127,21 @@ class StudentDetailsView extends Component {
   }
 
   render() {
-    const { isLoading, student, error, isEditing } = this.props;
+    const { StudentStore } = this.props;
 
-    if (isLoading) {
+    if (StudentStore.studentDetailsLoading) {
       return <Spinner />;
     }
 
-    if (!isLoading && error) {
+    if (!StudentStore.studentDetailsLoading && StudentStore.error) {
       return this.renderError();
     }
 
-    if (student && !isEditing) {
+    if (StudentStore.student && !StudentStore.studentDetailsEditing) {
       return this.renderDisplay();
     }
 
-    if (student && isEditing) {
+    if (StudentStore.student && StudentStore.studentDetailsEditing) {
       return this.renderForm();
     }
 

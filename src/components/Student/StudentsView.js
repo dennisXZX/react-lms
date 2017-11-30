@@ -16,18 +16,18 @@ class StudentsView extends Component {
   loadStudents = () => {
     const { StudentStore } = this.props;
 
-    StudentStore.studentsViewLoading = true;
+    StudentStore.studentsListLoading = true;
 
-    StudentStore.loadStudents();
+    StudentStore.getAllStudents();
   }
 
   render() {
-    const { studentsViewLoading } = this.props.StudentStore;
+    const { studentsListLoading } = this.props.StudentStore;
 
     return (
       <div>
         <StudentsViewHeader />
-        {studentsViewLoading ? <Spinner /> : <StudentList />}
+        {studentsListLoading ? <Spinner /> : <StudentList />}
       </div>
     );
   }

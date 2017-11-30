@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import StudentDetailsView from './StudentDetailsView';
 
-import {
-  getStudent, deleteStudent,
-  createStudent, updateStudent
-} from '../../api/studentApi';
-
-import { statusCodeToError } from '../../utils';
-
+@inject('StudentStore')
+@observer
 class StudentDetailsContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      isEditing: false,
-      isSaving: false,
-      error: '',
-      student: null,
-    };
-  }
 
   componentDidMount() {
     this.loadStudent();
@@ -32,40 +18,26 @@ class StudentDetailsContainer extends Component {
 
   // helper method to load a student with the id
   loadStudent() {
+    const { StudentStore } = this.props;
+
     // retrieve the student id from URL
     const { id } = this.props.match.params;
 
     // return a form interface if it's on a 'create' route
     if (id === 'create') {
-      this.setState({
-        student: {}, isEditing: true
-      });
+
+      StudentStore.student = {};
+      StudentStore.studentDetailsEditing = true;
 
       return;
     }
 
-    this.setState({ isLoading: true, error: '' });
-
-    const onSuccess = (response) => {
-      this.student = response.data;
-      this.setState({
-        student: response.data,
-        isLoading: false,
-      });
-    };
-
-    const onFail = (error) => {
-      this.setState({
-        student: null,
-        error: statusCodeToError(error.response.status),
-        isLoading: false,
-      });
-    };
+    StudentStore.studentDetailsLoading = true;
+    StudentStore.error = '';
 
     // retrieve all the students
-    getStudent(id)
-      .then(onSuccess)
-      .catch(onFail);
+    StudentStore.getStudent(id);
+
   }
 
   /*
@@ -73,49 +45,42 @@ class StudentDetailsContainer extends Component {
   * */
 
   handleInputChange = (event) => {
+    const { StudentStore } = this.props;
+
     const target = event.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    this.setState({
-      student: {
-        ...this.state.student,
-        [name]: value,
-      },
-    });
+    StudentStore.student = {
+      ...StudentStore.student,
+      [name]: value
+    }
   }
 
   handleEdit = () => {
-    this.setState({ isEditing: true });
+    const { StudentStore } = this.props;
+
+    StudentStore.studentDetailsEditing = true;
   }
 
   handleSubmit = (event) => {
+
     event.preventDefault();
 
-    this.setState({ isSaving: true });
+    const { StudentStore } = this.props;
 
-    const { student } = this.state;
-
-    const onSuccess = (response) => {
-      // update the student state with the data from API call
-      // set the isEditing to false to exit editing mode
-      this.setState({
-        isEditing: false,
-        isSaving: false,
-        student: response.data,
-      });
-    };
+    StudentStore.studentDetailsSaving = true;
 
     if (this.props.match.params.id === 'create') {
-      createStudent(student)
-        .then(onSuccess);
+      StudentStore.createStudent(StudentStore.student);
     } else {
-      updateStudent(student.id, student)
-        .then(onSuccess);
+      StudentStore.updateStudent(StudentStore.student.id, StudentStore.student);
     }
   }
 
   handleCancel = () => {
+    const { StudentStore } = this.props;
+
     // get the student id parameter from URL
     const { id } = this.props.match.params;
 
@@ -123,29 +88,27 @@ class StudentDetailsContainer extends Component {
     if (id === 'create') {
       this.props.history.push('/students');
     } else {
-      this.setState({
-        isEditing: false,
-      });
+      StudentStore.studentDetailsEditing = false;
     }
   }
 
   handleConfirmDelete = () => {
-    const { student } = this.state;
+    const { StudentStore } = this.props;
 
-    deleteStudent(student.id)
-      .then(() => {
-        this.props.history.push('/students');
-      });
+    StudentStore.deleteStudent(StudentStore.student.id);
+
+    this.props.history.push('/students');
   }
 
   render() {
+    const { StudentStore } = this.props;
+
     return <StudentDetailsView
       handleInputChange={this.handleInputChange}
       handleEdit={this.handleEdit}
       handleCancel={this.handleCancel}
       handleConfirmDelete={this.handleConfirmDelete}
-      handleSubmit={this.handleSubmit}
-      {...this.state} />
+      handleSubmit={this.handleSubmit} />
   }
 }
 

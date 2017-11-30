@@ -48,7 +48,6 @@ class CourseDetailsContainer extends Component {
     this.setState({ isLoading: true, error: '' });
 
     const onSuccess = (response) => {
-      this.course = response.data;
       this.setState({
         course: response.data,
         isLoading: false,
