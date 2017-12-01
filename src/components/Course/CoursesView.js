@@ -21,7 +21,7 @@ class CoursesView extends Component {
     CourseStore.courseViewLoading = true;
 
     // load all the courses
-    CourseStore.loadCourses();
+    CourseStore.getAllCourses();
   }
 
   render() {

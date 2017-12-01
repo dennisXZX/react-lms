@@ -1,26 +1,12 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import CourseDetailsView from './CourseDetailsView';
 
-import {
-  getCourse, deleteCourse,
-  createCourse, updateCourse
-} from '../../api/courseApi';
-
-import { statusCodeToError } from '../../utils';
-
+@inject('CourseStore')
+@observer
 class CourseDetailsContainer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      isEditing: false,
-      isSaving: false,
-      error: '',
-      course: null,
-    };
-  }
 
   componentDidMount() {
     this.loadCourse();
@@ -32,40 +18,24 @@ class CourseDetailsContainer extends Component {
 
   // helper method to load a course with the id
   loadCourse = () => {
+    const { CourseStore } = this.props;
+
     // retrieve the course id from URL
     const { id } = this.props.match.params;
 
     // return a form interface if it's on a 'create' route
     if (id === 'create') {
-      this.setState({
-        course: {},
-        isEditing: true
-      });
+      CourseStore.course = {};
+      CourseStore.courseDetailsEditing = true;
 
       return;
     }
 
-    this.setState({ isLoading: true, error: '' });
-
-    const onSuccess = (response) => {
-      this.setState({
-        course: response.data,
-        isLoading: false,
-      });
-    };
-
-    const onFail = (error) => {
-      this.setState({
-        course: null,
-        error: statusCodeToError(error.response.status),
-        isLoading: false,
-      });
-    };
+    CourseStore.courseDetailsLoading = true;
+    CourseStore.error = '';
 
     // retrieve all the courses
-    getCourse(id)
-      .then(onSuccess)
-      .catch(onFail);
+    CourseStore.getCourse(id);
   }
 
   /*
@@ -73,26 +43,31 @@ class CourseDetailsContainer extends Component {
   * */
 
   handleInputChange = (event) => {
+    const { CourseStore } = this.props;
+
     // get a reference to the object that dispatched the event
     const target = event.target;
     // get the value from the node
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    // store the value into state
-    this.setState({
-      course: {
-        ...this.state.course,
-        [name]: value,
-      },
-    });
+    // update the course
+    CourseStore.course = {
+      ...CourseStore.course,
+      [name]: value
+    }
+
   }
 
   handleEdit = () => {
-    this.setState({ isEditing: true });
+    const { CourseStore } = this.props;
+
+    CourseStore.courseDetailsEditing = true;
   }
 
   handleCancel = () => {
+    const { CourseStore } = this.props;
+
     // get the course id parameter from URL
     const { id } = this.props.match.params;
 
@@ -100,48 +75,30 @@ class CourseDetailsContainer extends Component {
     if (id === 'create') {
       this.props.history.push('/courses');
     } else {
-      this.setState({
-        isEditing: false
-      });
+      CourseStore.courseDetailsEditing = false;
     }
   }
 
   handleConfirmDelete = () => {
-    const { course } = this.state;
+    const { CourseStore } = this.props;
 
-    this.setState({ isDeleting: true });
-
-    deleteCourse(course.id)
-      .then(() => {
-        this.props.history.push('/courses');
-      });
+    CourseStore.deleteCourse(CourseStore.course.id).then(() => {
+      this.props.history.push('/courses');
+    });
   }
 
   handleSubmit = (event) => {
     // prevent the default submit action
     event.preventDefault();
 
-    this.setState({ isSaving: true });
+    const { CourseStore } = this.props;
 
-    const { course } = this.state;
-
-    // callback function on fulfilled promise
-    const onSuccess = (response) => {
-      // update the course state with the data from API call
-      // set the isEditing to false to exit editing mode
-      this.setState({
-        isEditing: false,
-        isSaving: false,
-        course: response.data,
-      });
-    };
+    CourseStore.courseDetailsSaving = true;
 
     if (this.props.match.params.id === 'create') {
-      createCourse(course)
-        .then(onSuccess);
+      CourseStore.createCourse(CourseStore.course);
     } else {
-      updateCourse(course.id, course)
-        .then(onSuccess);
+      CourseStore.updateCourse(CourseStore.course.id, CourseStore.course);
     }
 
   }
@@ -153,8 +110,7 @@ class CourseDetailsContainer extends Component {
         handleEdit={this.handleEdit}
         handleCancel={this.handleCancel}
         handleConfirmDelete={this.handleConfirmDelete}
-        handleSubmit={this.handleSubmit}
-        {...this.state} />
+        handleSubmit={this.handleSubmit} />
     )
   }
 }

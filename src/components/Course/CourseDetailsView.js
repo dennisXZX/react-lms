@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { inject, observer } from 'mobx-react';
 
 import Button from '../UI/Button';
 import DetailsCard from '../UI/DetailsCard';
@@ -7,18 +8,23 @@ import DisplayField from '../UI/DisplayField';
 import Spinner from '../UI/Spinner';
 import Confirm from 'react-confirm-bootstrap';
 
+@inject('CourseStore')
+@observer
 class CourseDetailsView extends Component {
 
   renderError = () => {
+    const { CourseStore } = this.props;
+
     return (
       <DetailsCard>
-        {this.state.error}
+        {CourseStore.error}
       </DetailsCard>
     )
   }
 
   renderDisplay = () => {
-    const { course, handleEdit, handleConfirmDelete } = this.props;
+    const { CourseStore } = this.props;
+    const { handleEdit, handleConfirmDelete } = this.props;
 
     return (
       <DetailsCard>
@@ -28,7 +34,7 @@ class CourseDetailsView extends Component {
           </div>
         </div>
         <DetailsCard.Header>
-          <h1>{course.name}</h1>
+          <h1>{CourseStore.course.name}</h1>
           <DetailsCard.ButtonGroup>
             <Button
               buttonStyle="primary"
@@ -46,19 +52,18 @@ class CourseDetailsView extends Component {
           </DetailsCard.ButtonGroup>
         </DetailsCard.Header>
 
-        <DisplayField label="Code">{course.code}</DisplayField>
-        <DisplayField label="Start at">{course.start_at}</DisplayField>
-        <DisplayField label="End at">{course.end_at}</DisplayField>
-        <DisplayField label="Introduction">{course.introduction}</DisplayField>
+        <DisplayField label="Code">{CourseStore.course.code}</DisplayField>
+        <DisplayField label="Start at">{CourseStore.course.start_at}</DisplayField>
+        <DisplayField label="End at">{CourseStore.course.end_at}</DisplayField>
+        <DisplayField label="Introduction">{CourseStore.course.introduction}</DisplayField>
       </DetailsCard>
     );
   }
 
   renderForm = () => {
-    const {
-      course, isSaving,
-      handleSubmit, handleInputChange, handleCancel
-    } = this.props;
+    const { CourseStore } = this.props;
+
+    const { handleSubmit, handleInputChange, handleCancel } = this.props;
 
     return (
       <DetailsCard>
@@ -69,7 +74,7 @@ class CourseDetailsView extends Component {
               type="text"
               className="form-control"
               placeholder="Name"
-              value={course.name || ''}
+              value={CourseStore.course.name || ''}
               name="name"
               onChange={handleInputChange}
               id="name"
@@ -81,7 +86,7 @@ class CourseDetailsView extends Component {
               type="text"
               className="form-control"
               placeholder="Code"
-              value={course.code || ''}
+              value={CourseStore.course.code || ''}
               name="code"
               onChange={handleInputChange}
               id="code"
@@ -93,7 +98,7 @@ class CourseDetailsView extends Component {
               type="text"
               className="form-control"
               placeholder="DD/MM/YYYY"
-              value={course.start_at || ''}
+              value={CourseStore.course.start_at || ''}
               name="start_at"
               onChange={handleInputChange}
               id="start-at"
@@ -105,7 +110,7 @@ class CourseDetailsView extends Component {
               type="text"
               className="form-control"
               placeholder="DD/MM/YYYY"
-              value={course.end_at || ''}
+              value={CourseStore.course.end_at || ''}
               name="end_at"
               onChange={handleInputChange}
               id="end-at"
@@ -116,7 +121,7 @@ class CourseDetailsView extends Component {
             <textarea
               className="form-control"
               placeholder="Introduction"
-              value={course.introduction || ''}
+              value={CourseStore.course.introduction || ''}
               name="introduction"
               onChange={handleInputChange}
               style={{ height: 100 }}
@@ -126,13 +131,13 @@ class CourseDetailsView extends Component {
           <Button
             buttonStyle="primary"
             type="submit"
-            disabled={isSaving}
+            disabled={CourseStore.courseDetailsSaving}
           >
             Save
           </Button>
           <Button
             onClick={handleCancel}
-            disabled={isSaving}
+            disabled={CourseStore.courseDetailsSaving}
             style={{ marginLeft: 10 }}
           >
             Cancel
@@ -143,25 +148,25 @@ class CourseDetailsView extends Component {
   }
 
   render() {
-    const { isLoading, course, error, isEditing } = this.props;
+    const { CourseStore } = this.props;
 
     // render a loading spinner
-    if (isLoading) {
+    if (CourseStore.courseDetailsLoading) {
       return <Spinner />;
     }
 
     // render an error message
-    if (!isLoading && error) {
+    if (!CourseStore.courseDetailsLoading && CourseStore.error) {
       return this.renderError();
     }
 
     // render the course detail if it's not in editing mode
-    if (course && !isEditing) {
+    if (CourseStore.course && !CourseStore.courseDetailsEditing) {
       return this.renderDisplay();
     }
 
     // render a form if it's in editing mode
-    if (course && isEditing) {
+    if (CourseStore.course && CourseStore.courseDetailsEditing) {
       return this.renderForm();
     }
 

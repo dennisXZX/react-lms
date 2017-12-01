@@ -101,8 +101,6 @@ class StudentDetailsContainer extends Component {
   }
 
   render() {
-    const { StudentStore } = this.props;
-
     return <StudentDetailsView
       handleInputChange={this.handleInputChange}
       handleEdit={this.handleEdit}
