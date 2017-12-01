@@ -7,6 +7,7 @@ import {
 import { statusCodeToError } from '../utils';
 
 class StudentStore {
+
   @observable studentsListLoading = false;
   @observable students = [];
   @observable filter = '';
@@ -68,7 +69,7 @@ class StudentStore {
   }
 
   @action deleteStudent(id) {
-    deleteStudent(id);
+    return deleteStudent(id);
   }
 
   @computed get filteredStudents() {
@@ -83,6 +84,7 @@ class StudentStore {
   @computed get studentCount() {
     return this.students.length;
   }
+
 }
 
 const store = new StudentStore();

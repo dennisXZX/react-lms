@@ -95,9 +95,9 @@ class StudentDetailsContainer extends Component {
   handleConfirmDelete = () => {
     const { StudentStore } = this.props;
 
-    StudentStore.deleteStudent(StudentStore.student.id);
-
-    this.props.history.push('/students');
+    StudentStore.deleteStudent(StudentStore.student.id).then(() => {
+      this.props.history.push('/students');
+    });
   }
 
   render() {
