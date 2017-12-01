@@ -56,6 +56,9 @@ class StudentDetailsView extends Component {
         <DisplayField label="Name">
           {StudentStore.student.first_name} {StudentStore.student.last_name}
         </DisplayField>
+        <DisplayField label="Gender">
+          {StudentStore.student.gender === 'm' ? 'male' : 'female'}
+        </DisplayField>
         <DisplayField label="Email">
           {StudentStore.student.email}
         </DisplayField>
