@@ -104,15 +104,15 @@ class StudentDetailsView extends Component {
           </div>
           <div className="form-group">
             <label htmlFor="gender">Gender</label>
-            <input
-              type="text"
+            <select
               className="form-control"
-              placeholder="gender"
               value={StudentStore.student.gender || ''}
               name="gender"
               onChange={handleInputChange}
-              id="gender"
-            />
+              id="gender">
+              <option value="m">Male</option>
+              <option value="f">Female</option>
+            </select>
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
