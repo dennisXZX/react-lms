@@ -58,8 +58,8 @@ class StudentDetailsView extends Component {
         </DisplayField>
         <DisplayField label="Gender">
           {StudentStore.student.gender === 'm' ?
-            <i class="fa fa-male fa-lg" aria-hidden="true"></i> :
-            <i class="fa fa-female fa-lg" aria-hidden="true"></i>}
+            <i className="fa fa-male fa-lg" aria-hidden="true"></i> :
+            <i className="fa fa-female fa-lg" aria-hidden="true"></i>}
         </DisplayField>
         <DisplayField label="Email">
           {StudentStore.student.email}
@@ -100,6 +100,18 @@ class StudentDetailsView extends Component {
               name="last_name"
               onChange={handleInputChange}
               id="last-name"
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="gender">Gender</label>
+            <input
+              type="text"
+              className="form-control"
+              placeholder="gender"
+              value={StudentStore.student.gender || ''}
+              name="gender"
+              onChange={handleInputChange}
+              id="gender"
             />
           </div>
           <div className="form-group">
