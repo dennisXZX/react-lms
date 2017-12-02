@@ -8,6 +8,7 @@ import DetailsCard from '../UI/DetailsCard';
 import DisplayField from '../UI/DisplayField';
 import Gravatar from '../UI/Gravatar';
 import Spinner from '../UI/Spinner';
+import Label from '../UI/Label';
 
 @inject('StudentStore')
 @observer
@@ -65,7 +66,13 @@ class StudentDetailsView extends Component {
           {StudentStore.student.email}
         </DisplayField>
         <DisplayField label="Courses enrolled" >
-          hello
+          {StudentStore.student.courses.map((course) => {
+            return (
+              <Link to={`/courses/${course.id}`} key={course.id}>
+                <Label copy={course.name} />
+              </Link>
+            )
+          })}
         </DisplayField>
       </DetailsCard>
     );
