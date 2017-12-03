@@ -66,7 +66,7 @@ class StudentDetailsView extends Component {
           {StudentStore.student.email}
         </DisplayField>
         <DisplayField label="Courses enrolled" >
-          {StudentStore.student.courses.map((course) => {
+          {StudentStore.student.courses !== undefined && StudentStore.student.courses.map((course) => {
             return (
               <Link to={`/courses/${course.id}`} key={course.id}>
                 <Label copy={course.name} />
