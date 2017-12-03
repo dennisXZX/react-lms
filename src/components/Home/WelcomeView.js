@@ -31,16 +31,11 @@ class WelcomeView extends Component {
 
     return (
       <div>
-        <h1>Dashboard</h1>
-        <div className="row chart">
+        <div className="row">
           <div className="col-sm-6 text-center">
+            <h3>Student Gender Distribution</h3>
             <Pie
-              data={data}
-              width={300}
-              height={300}
-              options={{
-                maintainAspectRatio: false
-              }} />
+              data={data} />
           </div>
           <div className="col-sm-6 text-center">.col-md-6</div>
         </div>
