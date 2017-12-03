@@ -75,6 +75,7 @@ class CourseDetailsContainer extends Component {
     if (id === 'create') {
       this.props.history.push('/courses');
     } else {
+      CourseStore.course = CourseStore.tempCourse;
       CourseStore.courseDetailsEditing = false;
     }
   }

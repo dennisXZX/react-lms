@@ -15,6 +15,7 @@ class CourseStore {
   @observable courseDetailsSaving = false;
   @observable error = '';
   @observable course = null;
+  @observable tempCourse = null;
 
   @action getAllCourses() {
     // get all the courses from API
@@ -26,6 +27,9 @@ class CourseStore {
 
   @action getCourse(id) {
     const onSuccess = (response) => {
+      // save a copy so when use clicks cancel we can revert all changes
+      this.tempCourse = response.data;
+      // update the course
       this.course = response.data;
       this.courseDetailsLoading = false;
     };
@@ -57,6 +61,9 @@ class CourseStore {
 
   @action updateCourse(id, course) {
     const onSuccess = (response) => {
+      // save a copy so when use clicks cancel we can revert all changes
+      this.tempCourse = response.data;
+
       // update the course state with the data from API call
       // set the isEditing to false to exit editing mode
       this.courseDetailsEditing = false;
