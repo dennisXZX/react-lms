@@ -12,7 +12,8 @@ class HomeStore {
     this.femaleCount = 0;
 
     getAllStudents().then((response) => {
-      response.data.map((student) => {
+      // iterate through the student array to calculate gender counts
+      response.data.forEach((student) => {
         student.gender === 'm' ? this.maleCount += 1 : this.femaleCount += 1;
       })
     });
