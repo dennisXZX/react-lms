@@ -88,6 +88,7 @@ class StudentDetailsContainer extends Component {
     if (id === 'create') {
       this.props.history.push('/students');
     } else {
+      StudentStore.student = StudentStore.tempStudent;
       StudentStore.studentDetailsEditing = false;
     }
   }

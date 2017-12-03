@@ -16,6 +16,7 @@ class StudentStore {
   @observable studentDetailsSaving = false;
   @observable error = '';
   @observable student = null;
+  @observable tempStudent = null;
 
   @action getAllStudents() {
     getAllStudents().then((response) => {
@@ -26,6 +27,9 @@ class StudentStore {
 
   @action getStudent(id) {
     const onSuccess = (response) => {
+      // save a copy so when user clicks cancel we can revert all changes
+      this.tempStudent = response.data;
+      // update the student
       this.student = response.data;
       this.studentDetailsLoading = false;
     };
@@ -57,6 +61,9 @@ class StudentStore {
 
   @action updateStudent(id, student) {
     const onSuccess = (response) => {
+      // save a copy so when user clicks cancel we can revert all changes
+      this.tempStudent = response.data;
+
       // update the student state with the data from API call
       // set the isEditing to false to exit editing mode
       this.studentDetailsEditing = false;
