@@ -89,7 +89,7 @@ class LecturerStore {
   }
 
   @computed get lecturerCount() {
-    return this.lecturers.length;
+    return this.filteredLecturers.length;
   }
 
 }

@@ -89,7 +89,7 @@ class StudentStore {
   }
 
   @computed get studentCount() {
-    return this.students.length;
+    return this.filteredStudents.length;
   }
 
 }

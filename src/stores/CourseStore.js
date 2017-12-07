@@ -88,7 +88,7 @@ class CourseStore {
   }
 
   @computed get courseCount() {
-    return this.courses.length;
+    return this.filteredCourses.length;
   }
 }
 
