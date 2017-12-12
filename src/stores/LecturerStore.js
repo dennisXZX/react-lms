@@ -19,7 +19,7 @@ class LecturerStore {
   @observable tempLecturer = null;
 
   @action getAllLecturers() {
-    this.getAllLecturers().then((response) => {
+    getAllLecturers().then((response) => {
       this.lecturers = response.data;
       this.lecturersListLoading = false;
     })
