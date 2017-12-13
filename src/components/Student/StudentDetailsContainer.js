@@ -35,7 +35,7 @@ class StudentDetailsContainer extends Component {
     StudentStore.studentDetailsLoading = true;
     StudentStore.error = '';
 
-    // retrieve all the students
+    // retrieve the student matched the id
     StudentStore.getStudent(id);
 
   }

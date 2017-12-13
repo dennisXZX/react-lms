@@ -6,11 +6,11 @@ import Gravatar from '../UI/Gravatar';
 export default function LecturerItem({ lecturer }) {
   return (
     <div className="list-group-item student-item-wrapper">
-      <Link to={`/students/${lecturer.id}`}>
+      <Link to={`/lecturers/${lecturer.id}`}>
         <div className="student-item">
           {/* avatar */}
           <Gravatar email={lecturer.email} size={40} />
-          {/* student name and email */}
+          {/* lecturer name and email */}
           <div style={{ flex: "1 0 0" }}>
             <div className="student-item-text">
               <div style={{ flex: "1 0 0" }}>
