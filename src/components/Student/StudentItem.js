@@ -5,20 +5,20 @@ import Gravatar from '../UI/Gravatar';
 
 export default function StudentItem({ student }) {
   return (
-    <div className="list-group-item student-item-wrapper">
+    <div className="list-group-item list-item-wrapper">
       <Link to={`/students/${student.id}`}>
-        <div className="student-item">
+        <div className="list-item">
           {/* avatar */}
           <Gravatar email={student.email} size={40} />
           {/* student name and email */}
           <div style={{ flex: "1 0 0" }}>
-            <div className="student-item-text">
+            <div className="item-text">
               <div style={{ flex: "1 0 0" }}>
-                <div className="student-item-name">
+                <div className="item-name">
                   <i className="fa fa-graduation-cap icon" aria-hidden="true" />
                   {student.first_name} {student.last_name}
                 </div>
-                <div className="student-item-email" aria-hidden="true">
+                <div className="item-email" aria-hidden="true">
                   <i className="fa fa-envelope-o icon" />
                   {student.email}
                 </div>

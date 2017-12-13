@@ -1,25 +1,25 @@
-.student-item-wrapper:hover {
+.list-item-wrapper:hover {
   background-color: #ebf3f9;
   cursor: pointer;
 }
 
-.student-item {
+.list-item {
   display: flex;
   margin: 10px 0;
 }
 
-.student-item-text {
+.item-text {
   display: flex;
   padding-left: 20px;
   align-items: center;
   height: 100%;
 }
 
-.student-item-name {
+.item-name {
   font-weight: bold;
 }
 
-.student-item-email {
+.item-email {
 }
 
 .icon {
