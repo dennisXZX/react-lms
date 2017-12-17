@@ -10,7 +10,6 @@ import CourseStore from './stores/CourseStore';
 import StudentStore from './stores/StudentStore';
 import ExamTimeStore from './stores/ExamTimeStore';
 import TodoStore from './stores/TodoStore';
-import HomeStore from './stores/HomeStore';
 import LecturerStore from './stores/LecturerStore';
 
 import './styles';
@@ -29,7 +28,6 @@ ReactDOM.render(
       StudentStore={StudentStore}
       ExamTimeStore={ExamTimeStore}
       TodoStore={TodoStore}
-      HomeStore={HomeStore}
       LecturerStore={LecturerStore}>
       <Shell />
     </Provider>

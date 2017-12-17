@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Pie } from 'react-chartjs-2';
 
-@inject('HomeStore')
+@inject('StudentStore')
 @observer
 class WelcomeView extends Component {
 
   componentDidMount() {
-    const { HomeStore } = this.props;
+    const { StudentStore } = this.props;
 
-    HomeStore.getGenderCount();
+    StudentStore.getGenderCount();
   }
 
   render() {
-    const { HomeStore } = this.props;
+    const { StudentStore } = this.props;
 
-    const data = {
+    const genderData = {
       labels: [
         'Male',
         'Female'
       ],
       datasets: [{
-        data: [HomeStore.maleCount, HomeStore.femaleCount],
+        data: [StudentStore.maleCount, StudentStore.femaleCount],
         backgroundColor: [
           '#36A2EB',
           '#FF6384'
@@ -35,7 +35,7 @@ class WelcomeView extends Component {
           <div className="col-sm-6 text-center">
             <h3>Student Gender Distribution</h3>
             <Pie
-              data={data} />
+              data={genderData} />
           </div>
           <div className="col-sm-6 text-center">.col-md-6</div>
         </div>
