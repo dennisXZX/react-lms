@@ -17,6 +17,7 @@ class LecturerStore {
   @observable error = '';
   @observable lecturer = null;
   @observable tempLecturer = null;
+  @observable totalLecturerCount = 0;
 
   @action getAllLecturers() {
     getAllLecturers().then((response) => {
@@ -79,6 +80,17 @@ class LecturerStore {
     return deleteLecturer(id);
   }
 
+  @action countLecturer() {
+    // reset the counts
+    this.totalLecturerCount = 0;
+
+    getAllLecturers().then((response) => {
+      response.data.forEach(() => {
+        this.totalLecturerCount += 1;
+      })
+    });
+  }
+
   @computed get filteredLecturers() {
     const matchesFilter = new RegExp(this.filter, "i");
 
@@ -91,7 +103,6 @@ class LecturerStore {
   @computed get lecturerCount() {
     return this.filteredLecturers.length;
   }
-
 }
 
 const store = new LecturerStore();

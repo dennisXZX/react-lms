@@ -19,6 +19,7 @@ class StudentStore {
   @observable tempStudent = null;
   @observable maleCount = 0;
   @observable femaleCount = 0;
+  @observable totalStudentCount = 0;
 
   @action getAllStudents() {
     getAllStudents().then((response) => {
@@ -81,15 +82,17 @@ class StudentStore {
     return deleteStudent(id);
   }
 
-  @action getGenderCount() {
+  @action countStudent() {
     // reset the counts
     this.maleCount = 0;
     this.femaleCount = 0;
+    this.totalStudentCount = 0;
 
     getAllStudents().then((response) => {
       // iterate through the student array to calculate gender counts
       response.data.forEach((student) => {
         student.gender === 'm' ? this.maleCount += 1 : this.femaleCount += 1;
+        this.totalStudentCount += 1;
       })
     });
   }
