@@ -110,18 +110,6 @@ class LecturerDetailsView extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="gender">Gender</label>
-            <select
-              className="form-control"
-              value={LecturerStore.lecturer.gender || ''}
-              name="gender"
-              onChange={handleInputChange}
-              id="gender">
-              <option value="m">Male</option>
-              <option value="f">Female</option>
-            </select>
-          </div>
-          <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -162,14 +150,10 @@ class LecturerDetailsView extends Component {
     }
 
     if (LecturerStore.lecturer && !LecturerStore.lecturerDetailsEditing) {
-      console.log('render display');
-
       return this.renderDisplay();
     }
 
     if (LecturerStore.lecturer && LecturerStore.lecturerDetailsEditing) {
-      console.log('render form');
-
       return this.renderForm();
     }
 
