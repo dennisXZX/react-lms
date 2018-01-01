@@ -9,6 +9,13 @@ Powered by React, React Router, Mobx, Chart.js
 
 [Backend](https://github.com/dennisboys/laravel-lms-api) of this project is powered by Laravel.
 
+#### Todo items
+
+- display title info for lecturer
+- add title form field in the lecturer form
+- add pagination
+- finish todo feature
+
 #### Found issues
 
 - when you add a new student, even you select gender as 'male', it would display female for the first time. After refreshing it would display the correct gender. In the database it is correctly recorded, this must be a frontend issue.
