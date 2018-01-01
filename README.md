@@ -14,6 +14,7 @@ Powered by React, React Router, Mobx, Chart.js
 - display title info for lecturer
 - add title form field in the lecturer form
 - add pagination
+- add list sorting
 - finish todo feature
 
 #### Found issues
