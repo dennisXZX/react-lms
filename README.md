@@ -8,3 +8,7 @@ Powered by React, React Router, Mobx, Chart.js
 - default port: `localhost:3000`
 
 [Backend](https://github.com/dennisboys/laravel-lms-api) of this project is powered by Laravel.
+
+#### Found issues
+
+- when you add a new student, even you select gender as 'male', it would display female for the first time. After refreshing it would display the correct gender. In the database it is correctly recorded, this must be a frontend issue.
