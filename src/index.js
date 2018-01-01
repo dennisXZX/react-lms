@@ -18,8 +18,7 @@ import './styles';
 import registerServiceWorker from './registerServiceWorker';
 
 // set a default URL that applies to every request
-// API is hosted on AWS EC2
-axios.defaults.baseURL = 'https://react.fail';
+axios.defaults.baseURL = 'http://laravel-api.test/';
 
 ReactDOM.render(
   <Router>
